@@ -1,7 +1,6 @@
 import React from 'react';
 import { useRef, useState, useEffect } from 'react';
 import useAuth from '../Hooks/useAuth';
-// import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useNavigate, useLocation } from "react-router-dom";
 
 import axios from '../api/axios';
@@ -12,7 +11,6 @@ const Login = () => {
 
     const navigate = useNavigate();
     const location = useLocation();
-    // const from = location.state?.from.pathname || "/";
 
     const userRef = useRef();
     const errRef = useRef();
@@ -49,7 +47,6 @@ const Login = () => {
             setAuth({ user, pwd, accessToken });
             setUser('');
             setPwd('');
-            // navigate(from, { replace: true });
             navigate("/", { replace: true });
         } catch (err) { 
             if (!err?.response) {
