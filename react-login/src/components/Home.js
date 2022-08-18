@@ -7,11 +7,11 @@ const Home = () => {
       <br />
       <p>The interventions will be displayed here.</p>
       <br />
-      <div className="d-grid gap-2 mt-3">
+      {/* <div className="d-grid gap-2 mt-3">
         <button className="btn btn-primary">
           Log out
         </button>
-      </div>
+      </div> */}
     </section>
   )
 }
