@@ -2,6 +2,7 @@ import React from 'react';
 import { useRef, useState, useEffect } from 'react';
 import useAuth from '../Hooks/useAuth';
 import { useNavigate, useLocation } from "react-router-dom";
+import mainLogo from '../images/logo.png';
 
 import axios from '../api/axios';
 const LOGIN_URL = "/authenticate?email=customer1%40business.com&password=password123";
@@ -67,9 +68,11 @@ const Login = () => {
         <section>
             <div className="Auth-form-container">
                 <form className="Auth-form" onSubmit={handleSubmit}>
-                <img src="react-login\src\logo.png" alt="Rocket Elevators Logo"></img>
-                <p ref={errRef} className={errMsg ? "errmsg" : "offscreen"} aria-live="assertive">{errMsg}</p>
-                <h3 className="Auth-form-title">Sign In</h3>
+                    <img className="mainLogo" src={mainLogo} alt="Rocket Elevators Logo"></img>
+                    <p ref={errRef} className={errMsg ? "errmsg" : "offscreen"} aria-live="assertive">
+                        {errMsg}
+                    </p>
+                    <h3 className="Auth-form-title">Sign In</h3>
                     <div className="Auth-form-content">
                         <div className="form-group mt-3">
                             <label htmlFor="user">Email address</label>
@@ -98,18 +101,16 @@ const Login = () => {
                             />
                         </div>
                         <div className="d-grid gap-2 mt-3">
-                            <button className="btn btn-primary">
-                                Sign in
-                            </button>
+                            <button className="btn btn-primary">Sign in</button>
                         </div>
                         {/* <p className="forgot-password text-right mt-2"> */}
-                            {/* Forgot <a href="#">password?</a> */}
+                        {/* Forgot <a href="#">password?</a> */}
                         {/* </p> */}
                     </div>
                 </form>
             </div>
         </section>
-    )
+    );
 }
 
 export default Login

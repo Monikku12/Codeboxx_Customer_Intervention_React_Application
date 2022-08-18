@@ -1,10 +1,9 @@
 import { useState, useEffect } from 'react';
-import axios from '../api/axios';
-// import useRefreshToken from '../Hooks/useRefreshToken';
+import useAxiosPrivate from '../Hooks/useAxiosPrivate';
 
 const Users = () => {
-    const [users, setUsers] = useState();
-    // const refresh = useRefreshToken();
+    const [setUsers] = useState();
+    const axiosPrivate = useAxiosPrivate();
 
     useEffect(() => {
         let isMounted = true;
@@ -12,8 +11,8 @@ const Users = () => {
 
         const getUsers = async () => {
             try {
-                const response = await axios.get('/users', {
-                    signal: controller.signal
+                const response = await axiosPrivate.get("/customers/current", {
+                    signal: controller.signal,
                 });
                 console.log(response.data);
                 isMounted && setUsers(response.data);
@@ -30,21 +29,19 @@ const Users = () => {
         }
     }, [])
 
-    return (
-        <article>
-            <h2>Users List</h2>
-            {users?.length
-                ? (
-                    <ul>
-                        {users.map((user, i) => <li key={i}>{user?.id}</li>)}
-                    </ul>
-                ) : <p>No users to display</p>
-            }
-            {/* Refresh function Test ⇊ */}
-            {/* <button  onClick={() => refresh()}>Refresh</button> */}
-            <br/>
-        </article>
-    );
+    // return (
+    //     <article>
+    //         <h2>Users List</h2>
+    //         {users?.length
+    //             ? (
+    //                 <ul>
+    //                     {users.map((user, i) => <li key={i}>{user?.id}</li>)}
+    //                 </ul>
+    //             ) : <p>No users to display</p>
+    //         }
+    //         <br/>
+    //     </article>
+    // );
 };
 
 export default Users;
