@@ -4,7 +4,6 @@ import Login from './components/Login';
 import Home from "./components/Home";
 import Layout from './components/Layout';
 import Missing from './components/Missing';
-import Unauthorized from './components/Unauthorized';
 import RequireAuth from './components/RequireAuth';
 import { Routes, Route } from 'react-router-dom';
 
@@ -14,7 +13,6 @@ function App() {
       <Route path="/" element={<Layout />}>
         {/* Public Routes */}
         <Route path="login" element={<Login />} />
-        <Route path="unauthorized" element={<Unauthorized />} />
   
         {/* Private Routes */}
         <Route element={<RequireAuth />}>
