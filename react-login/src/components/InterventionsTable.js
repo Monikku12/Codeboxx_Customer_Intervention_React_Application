@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useTable } from "react-table";
 
 export default function InterventionsTable({ columns, data }) {
@@ -12,6 +12,10 @@ export default function InterventionsTable({ columns, data }) {
     } = useTable({
         columns,
         data,
+    });
+    useEffect(() => {
+        console.log(headerGroups);
+        console.log(rows);
     });
 
     /* 

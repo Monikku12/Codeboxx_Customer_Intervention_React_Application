@@ -1,5 +1,5 @@
 import React, { useMemo, useState, useEffect } from "react";
-import ReactTable from "react-table";
+// import ReactTable from "react-table";
 import axios from "axios";
 import InterventionsTable from "./InterventionsTable";
 
