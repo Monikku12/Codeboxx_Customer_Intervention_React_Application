@@ -1,10 +1,10 @@
-import React from 'react';
-import { useRef, useState, useEffect } from 'react';
-import useAuth from '../Hooks/useAuth';
+import React from "react";
+import { useRef, useState, useEffect } from "react";
+import useAuth from "../Hooks/useAuth";
 import { useNavigate, useLocation } from "react-router-dom";
-import mainLogo from '../images/logo.png';
+import mainLogo from "../images/logo.png";
 
-import axios from '../api/axios';
+import axios from "../api/axios";
 const LOGIN_URL = "/authenticate?email=customer1%40business.com&password=password123";
 
 const Login = () => {
@@ -15,53 +15,52 @@ const Login = () => {
 
     const userRef = useRef();
     const errRef = useRef();
-    
-    const [user, setUser] = useState('');
-    const [pwd, setPwd] = useState('');
-    const [errMsg, setErrMsg] = useState('');
-    
+
+    const [user, setUser] = useState("");
+    const [pwd, setPwd] = useState("");
+    const [errMsg, setErrMsg] = useState("");
+
     useEffect(() => {
         userRef.current.focus();
-    }, [])
-    
+    }, []);
+
     useEffect(() => {
-        setErrMsg('');
-    }, [user, pwd])
-    
+        setErrMsg("");
+    }, [user, pwd]);
+
     const handleSubmit = async (e) => {
         e.preventDefault();
 
         try {
-            
-            const response = await axios.post(LOGIN_URL,
+            const response = await axios.post(
+                LOGIN_URL,
                 // JSON.stringify({ email: user, password: pwd }),
                 {
                     headers: {
-                        'Content-Type': 'application/json',
+                        "Content-Type": "application/json",
                     },
-                    withCredentials: true
+                    withCredentials: true,
                 }
             );
             const accessToken = response?.data?.accessToken;
             setAuth({ user, accessToken });
-            setUser('');
-            setPwd('');
+            setUser("");
+            setPwd("");
             navigate("/", { replace: true });
-        } catch (err) { 
+        } catch (err) {
             if (!err?.response) {
-                setErrMsg('No Server Response');
+                setErrMsg("No Server Response");
             } else if (err.response?.status === 400) {
-                setErrMsg('Missing Username or Password');
+                setErrMsg("Missing Username or Password");
             } else if (err.response?.status === 401) {
-                setErrMsg('Unauthorized');
+                setErrMsg("Unauthorized");
             } else {
-                setErrMsg('Login Failed');
+                setErrMsg("Login Failed");
             }
             errRef.current.focus();
         }
+    };
 
-    }    
-    
     return (
         <section>
             <div className="Auth-form-container">
@@ -109,6 +108,6 @@ const Login = () => {
             </div>
         </section>
     );
-}
+};
 
-export default Login
+export default Login;

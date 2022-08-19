@@ -1,5 +1,5 @@
-import { useState, useEffect } from 'react';
-import useAxiosPrivate from '../Hooks/useAxiosPrivate';
+import { useState, useEffect } from "react";
+import useAxiosPrivate from "../Hooks/useAxiosPrivate";
 
 const Users = () => {
     const [setUsers] = useState();
@@ -14,20 +14,20 @@ const Users = () => {
                 const response = await axiosPrivate.get("/customers/current", {
                     signal: controller.signal,
                 });
-                const customerId = response.data.map(customer => customer.id)
+                const customerId = response.data.map((customer) => customer.id);
                 isMounted && setUsers(customerId);
             } catch (err) {
                 console.error(err);
             }
-        }
+        };
 
         getUsers();
 
         return () => {
             isMounted = false;
             controller.abort();
-        }
-    }, [])
+        };
+    }, []);
 
     // return (
     //     <article>

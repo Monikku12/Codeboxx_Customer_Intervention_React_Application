@@ -1,12 +1,12 @@
-import axios from 'axios';
-const BASE_URL = 'https://java-api.codeboxxtest.xyz';
+import axios from "axios";
+const BASE_URL = "https://java-api.codeboxxtest.xyz";
 
 export default axios.create({
-    baseURL: BASE_URL
+    baseURL: BASE_URL,
 });
 
 export const axiosPrivate = axios.create({
     baseURL: BASE_URL,
-    headers: { 'Content-Type': 'application/json' },
-    withCredentials: true
+    headers: { "Content-Type": "application/json" },
+    withCredentials: true,
 });

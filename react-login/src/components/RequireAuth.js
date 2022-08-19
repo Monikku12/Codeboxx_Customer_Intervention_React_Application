@@ -1,10 +1,12 @@
-import { useLocation, Navigate, Outlet } from 'react-router-dom';
-import useAuth from '../Hooks/useAuth';
+import { useLocation, Navigate, Outlet } from "react-router-dom";
+import useAuth from "../Hooks/useAuth";
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
 const RequireAuth = () => {
     const { auth } = useAuth();
     const location = useLocation();
+    // let navigate = useNavigate();
 
     return (
         auth?.user
