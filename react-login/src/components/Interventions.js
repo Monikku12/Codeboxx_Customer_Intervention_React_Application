@@ -4,18 +4,7 @@ import axios from "axios";
 import InterventionsTable from "./InterventionsTable";
 
 function Interventions() {
-    // data state to store the TV Maze API data. Its initial value is an empty array
-    const [data, setData] = useState([]);
-
-    // Using useEffect to call the API once mounted and set the data
-    useEffect(() => {
-        (async () => {
-            const result = await axios.get("/customers/current");
-            console.log(response.data);
-            setData(result.data);
-        })();
-    }, []);
-
+    // data state to store the Interventions API data. Its initial value is an empty array
     const columns = useMemo(
         () => [
             {
@@ -59,6 +48,17 @@ function Interventions() {
         ],
         []
     );
+
+    const [data, setData] = useState([]);
+
+    // Using useEffect to call the API once mounted and set the data
+    useEffect(() => {
+        (async () => {
+            const result = await axios.get("/customers/current");
+            console.log(response.data);
+            setData(result.data);
+        })();
+    }, []);
 
     return (
         <div className="App">

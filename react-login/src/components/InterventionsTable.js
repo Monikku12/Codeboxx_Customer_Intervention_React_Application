@@ -2,6 +2,7 @@ import React from "react";
 import { useTable } from "react-table";
 
 export default function InterventionsTable({ columns, data }) {
+    // Use the useTable Hook to send the columns and data to build the table
     const {
         getTableProps, // table props from react-table
         getTableBodyProps, // table body props from react-table

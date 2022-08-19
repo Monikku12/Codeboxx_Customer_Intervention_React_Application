@@ -1,7 +1,7 @@
 import React from "react";
 import { useRef, useState, useEffect } from "react";
 import useAuth from "../Hooks/useAuth";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import mainLogo from "../images/logo.png";
 
 import axios from "../api/axios";
@@ -11,7 +11,6 @@ const Login = () => {
     const { setAuth } = useAuth();
 
     const navigate = useNavigate();
-    const location = useLocation();
 
     const userRef = useRef();
     const errRef = useRef();
@@ -100,9 +99,6 @@ const Login = () => {
                         <div className="d-grid gap-2 mt-3">
                             <button className="btn btn-primary">Sign in</button>
                         </div>
-                        {/* <p className="forgot-password text-right mt-2"> */}
-                        {/* Forgot <a href="#">password?</a> */}
-                        {/* </p> */}
                     </div>
                 </form>
             </div>
