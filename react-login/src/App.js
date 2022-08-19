@@ -6,6 +6,7 @@ import Layout from './components/Layout';
 import Missing from './components/Missing';
 import RequireAuth from './components/RequireAuth';
 import { Routes, Route } from 'react-router-dom';
+import React from "react";
 
 function App() {
   return (

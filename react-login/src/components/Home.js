@@ -1,5 +1,5 @@
 import InterventionsTable from "./InterventionsTable";
-
+import React from "react";
 
 const Home = () => {
   return (
