@@ -4,7 +4,7 @@ import useAuth from "../Hooks/useAuth";
 import { useNavigate } from "react-router-dom";
 import mainLogo from "../images/logo.png";
 
-import axios from "../api/axios";
+import axiosPrivate from "../api/axios";
 const LOGIN_URL = "/authenticate?email=customer1%40business.com&password=password123";
 
 const Login = () => {
@@ -31,15 +31,15 @@ const Login = () => {
         e.preventDefault();
 
         try {
-            const response = await axios.post(
+            const response = await axiosPrivate.post(
                 LOGIN_URL,
                 // JSON.stringify({ email: user, password: pwd }),
-                {
-                    headers: {
-                        "Content-Type": "application/json",
-                    },
-                    withCredentials: true,
-                }
+                // {
+                //     headers: {
+                //         "Content-Type": "application/json",
+                //     },
+                //     withCredentials: true,
+                // }
             );
             const accessToken = response?.data?.accessToken;
             setAuth({ user, accessToken });
@@ -60,6 +60,7 @@ const Login = () => {
         }
     };
 
+    //  *** Login Form ***
     return (
         <section>
             <div className="Auth-form-container">
