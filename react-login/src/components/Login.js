@@ -3,8 +3,8 @@ import { useRef, useState, useEffect } from "react";
 import useAuth from "../Hooks/useAuth";
 import { useNavigate } from "react-router-dom";
 import mainLogo from "../images/logo.png";
-
 import axiosPrivate from "../api/axios";
+
 const LOGIN_URL = "/authenticate?email=customer1%40business.com&password=password123";
 
 const Login = () => {
@@ -33,7 +33,7 @@ const Login = () => {
         try {
             const response = await axiosPrivate.post(
                 LOGIN_URL,
-                // JSON.stringify({ email: user, password: pwd }),
+                JSON.stringify({ email: user, password: pwd }),
                 // {
                 //     headers: {
                 //         "Content-Type": "application/json",
@@ -41,6 +41,8 @@ const Login = () => {
                 //     withCredentials: true,
                 // }
             );
+            console.log(JSON.stringify(response?.data));
+            //console.log(JSON.stringify(response));
             const accessToken = response?.data?.accessToken;
             setAuth({ user, accessToken });
             setUser("");
