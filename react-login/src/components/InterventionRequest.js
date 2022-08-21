@@ -1,132 +1,233 @@
 // import React from "react";
 import { useRef, useState, useEffect } from "react";
-import useAuth from "../Hooks/useAuth";
+// import useAuth from "../Hooks/useAuth";
 import axiosPrivate from "../api/axios";
+// import useAxiosPrivate from "../Hooks/useAxiosPrivate";
 
 // import { useNavigate } from "react-router-dom";
 
 // import axios from "../api/axios";
-// const LOGIN_URL = "/authenticate?email=customer1%40business.com&password=password123";
+const REQUEST_URL = "/interventions/new";
 
-// const Request = () => {
-//     const navigate = useNavigate();
+const InterventionRequest = () => {
+    // const AUTH = useAxiosPrivate();
+    // const navigate = useNavigate();
+    const userRef = useRef();
+    const errRef = useRef();
 
-//     const userRef = useRef();
-//     const errRef = useRef();
+    const [user, setUser] = useState("");
+    // const [pwd, setPwd] = useState("");
+    const [errMsg, setErrMsg] = useState("");
+    const [setMsg] = useState("");
 
-//     const [user, setUser] = useState("");
-//     const [pwd, setPwd] = useState("");
-//     const [errMsg, setErrMsg] = useState("");
+    useEffect(() => {
+        userRef.current.focus();
+    }, []);
 
-//     useEffect(() => {
-//         userRef.current.focus();
-//     }, []);
+    //     useEffect(() => {
+    //         setErrMsg("");
+    //     }, [user, pwd]);
 
-//     useEffect(() => {
-//         setErrMsg("");
-//     }, [user, pwd]);
+    const handleSubmit = async (e) => {
+        e.preventDefault();
 
-//     const handleSubmit = async (e) => {
-//         e.preventDefault();
+        try {
+            const response = await axiosPrivate.post(
+                REQUEST_URL,
+                // {
+                    // Authorization: AUTH,
+                    //                 // JSON.stringify({ email: user, password: pwd }),
+                    //                 {
+                    //                     headers: {
+                    //                         "Content-Type": "application/json",
+                    //                     },
+                    //                     withCredentials: true,
+                    //                 }
+                // }
+                );
+            const accessToken = response?.data?.accessToken;
+            console.log(accessToken);
+            //             setAuth({ user, accessToken });
+            setUser("");
+            setMsg("Your request as been sent");
+            //             setPwd("");
+            //             navigate("/", { replace: true });
+        } catch (err) {
+            if (!err?.response) {
+                setErrMsg("No Server Response");
+            } else if (err.response?.status === 403) {
+                setErrMsg("Oops! Something went wrong. Error 403");
+            } else {
+                setErrMsg("Request Failed");
+            }
+            errRef.current.focus();
+        }
+    };
 
-//         try {
-//             const response = await axios.post(
-//                 LOGIN_URL,
-//                 // JSON.stringify({ email: user, password: pwd }),
-//                 {
-//                     headers: {
-//                         "Content-Type": "application/json",
-//                     },
-//                     withCredentials: true,
-//                 }
-//             );
-//             const accessToken = response?.data?.accessToken;
-//             setAuth({ user, accessToken });
-//             setUser("");
-//             setPwd("");
-//             navigate("/", { replace: true });
-//         } catch (err) {
-//             if (!err?.response) {
-//                 setErrMsg("No Server Response");
-//             } else if (err.response?.status === 400) {
-//                 setErrMsg("Missing Username or Password");
-//             } else if (err.response?.status === 401) {
-//                 setErrMsg("Unauthorized");
-//             } else {
-//                 setErrMsg("Login Failed");
-//             }
-//             errRef.current.focus();
-//         }
-//     };
+    return (
+        <section>
+            <div className="Auth-form-container">
+                <form className="Auth-form" onSubmit={handleSubmit}>
+                    {/* <img className="mainLogo" src={mainLogo} alt="Rocket Elevators Logo"></img> */}
+                    <p ref={errRef} className={errMsg ? "errmsg" : "offscreen"} aria-live="assertive">
+                        {errMsg}
+                    </p>
+                    <h3 className="Auth-form-title">Intervention Request</h3>
+                    <div className="Auth-form-content">
+                        <div className="form-group mt-3">
+                            <hidden_field
+                                // type="integer"
+                                id="author"
+                                ref={userRef}
+                                value={user}
+                                className="form-control mt-1"
+                            />
+                        </div>
+                        <div className="form-group mt-3">
+                            <label htmlFor="user">Customer</label>
+                            <hidden_field
+                                // type="email"
+                                id="customer_id"
+                                // ref={author}
+                                // value={customer_id}
+                                className="form-control mt-1"
+                            />
+                        </div>
+                        <div className="form-group mt-3">
+                            <label htmlFor="user">Building</label>
+                            <select_tag
+                                type=""
+                                id="user"
+                                ref={userRef}
+                                autoComplete="off"
+                                onChange={(e) => setUser(e.target.value)}
+                                value={user}
+                                required
+                                className="form-control mt-1"
+                                placeholder="Enter email"
+                            />
+                        </div>
+                        {/* <div className="form-group mt-3">
+                            <label htmlFor="user">Email address</label>
+                            <input
+                                type="email"
+                                id="user"
+                                ref={userRef}
+                                autoComplete="off"
+                                onChange={(e) => setUser(e.target.value)}
+                                value={user}
+                                required
+                                className="form-control mt-1"
+                                placeholder="Enter email"
+                            />
+                        </div> */}
+                        {/* <div className="form-group mt-3">
+                            <label htmlFor="user">Email address</label>
+                            <input
+                                type="email"
+                                id="user"
+                                ref={userRef}
+                                autoComplete="off"
+                                onChange={(e) => setUser(e.target.value)}
+                                value={user}
+                                required
+                                className="form-control mt-1"
+                                placeholder="Enter email"
+                            />
+                        </div> */}
+                        {/* <div className="form-group mt-3">
+                            <label htmlFor="user">Email address</label>
+                            <input
+                                type="email"
+                                id="user"
+                                ref={userRef}
+                                autoComplete="off"
+                                onChange={(e) => setUser(e.target.value)}
+                                value={user}
+                                required
+                                className="form-control mt-1"
+                                placeholder="Enter email"
+                            />
+                        </div> */}
+                        {/* <div className="form-group mt-3">
+                            <label htmlFor="user">Email address</label>
+                            <input
+                                type="email"
+                                id="user"
+                                ref={userRef}
+                                autoComplete="off"
+                                onChange={(e) => setUser(e.target.value)}
+                                value={user}
+                                required
+                                className="form-control mt-1"
+                                placeholder="Enter email"
+                            />
+                        </div> */}
+                        {/* <div className="form-group mt-3">
+                            <label htmlFor="user">Email address</label>
+                            <input
+                                type="email"
+                                id="user"
+                                ref={userRef}
+                                autoComplete="off"
+                                onChange={(e) => setUser(e.target.value)}
+                                value={user}
+                                required
+                                className="form-control mt-1"
+                                placeholder="Enter email"
+                            />
+                        </div> */}
+                        {/* <div className="form-group mt-3">
+                            <label htmlFor="user">Email address</label>
+                            <input
+                                type="email"
+                                id="user"
+                                ref={userRef}
+                                autoComplete="off"
+                                onChange={(e) => setUser(e.target.value)}
+                                value={user}
+                                required
+                                className="form-control mt-1"
+                                placeholder="Enter email"
+                            />
+                        </div> */}
+                        {/* <div className="form-group mt-3">
+                             <label htmlFor="password">Password</label>
+                             <input
+                                type="password"
+                                id="password"
+                                onChange={(e) => setPwd(e.target.value)}
+                                value={pwd}
+                                required
+                                className="form-control mt-1"
+                                placeholder="Enter password"
+                            />
+                        </div> */}
+                        <div className="d-grid gap-2 mt-3">
+                            <button className="btn btn-primary">Sign in</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </section>
+    );
+};
 
-//     return (
-//         <section>
-//             <div className="Auth-form-container">
-//                 <form className="Auth-form" onSubmit={handleSubmit}>
-//                     <img className="mainLogo" src={mainLogo} alt="Rocket Elevators Logo"></img>
-//                     <p ref={errRef} className={errMsg ? "errmsg" : "offscreen"} aria-live="assertive">
-//                         {errMsg}
-//                     </p>
-//                     <h3 className="Auth-form-title">Intervention Request</h3>
-//                     <div className="Auth-form-content">
-//                         <div className="form-group mt-3">
-//                             <input
-//                                 type="integer"
-//                                 id="author"
-//                                 ref={userRef}
-//                                 value={user}
-//                                 className="form-control mt-1"
-//                             />
-//                             <label htmlFor="user">Email address</label>
-//                             <input
-//                                 type="email"
-//                                 id="user"
-//                                 ref={userRef}
-//                                 autoComplete="off"
-//                                 onChange={(e) => setUser(e.target.value)}
-//                                 value={user}
-//                                 required
-//                                 className="form-control mt-1"
-//                                 placeholder="Enter email"
-//                             />
-//                         </div>
-//                         <div className="form-group mt-3">
-//                             <label htmlFor="password">Password</label>
-//                             <input
-//                                 type="password"
-//                                 id="password"
-//                                 onChange={(e) => setPwd(e.target.value)}
-//                                 value={pwd}
-//                                 required
-//                                 className="form-control mt-1"
-//                                 placeholder="Enter password"
-//                             />
-//                         </div>
-//                         <div className="d-grid gap-2 mt-3">
-//                             <button className="btn btn-primary">Sign in</button>
-//                         </div>
-//                     </div>
-//                 </form>
-//             </div>
-//         </section>
-//     );
-// };
 
-
-
-// //  Interventions Form 
-//   <div class="field"> 
-//     <form.label :author/> 
+// ⇊⇊⇊⇊⇊⇊⇊⇊⇊ RUBY ⇊⇊⇊⇊⇊⇊⇊⇊⇊
+// //  Interventions Form
+//   <div class="field">
+//     <form.label :author/>
 //     <form.text_field :authenticate_user_id, class: "formFieldReadOnly", readonly: true />
-//   </div> 
-//   <div class="field"> 
+//   </div>
+//   <div class="field">
 //     <form.label :customer_id />
 //     <form.select(:customer_id, options_for_select(@customer_id)) />
-//   </div> 
-//   <div class="field"> 
+//   </div>
+//   <div class="field">
 //     <form.label :building_id />
 //     <form.select(:building_id, options_for_select(@building_id)) />
-//   </div> 
+//   </div>
 
 //   <div class="row no-gutters wow slideInUp" data-wow-duration="1s">
 //     <div class="col-md-12 home-form">
@@ -135,8 +236,8 @@ import axiosPrivate from "../api/axios";
 //         <form.hidden_field current_user.id, class: "formFieldReadOnly", readonly: true />
 //       </div>
 //       <div id="step_1">
-//         form.label "Step 1 - Select Customer" 
-//         select_tag :customer_id, options_from_collection_for_select(Customer.all, "id", "id"), :required => true, prompt: "< Select customer>", class: "custom-select mb-0 mr-sm-0 mb-sm-0" 
+//         form.label "Step 1 - Select Customer"
+//         select_tag :customer_id, options_from_collection_for_select(Customer.all, "id", "id"), :required => true, prompt: "< Select customer>", class: "custom-select mb-0 mr-sm-0 mb-sm-0"
 //       </div>
 //       <div id="step_2">
 //         <form.label "Step 2 - Select Building" />
@@ -177,43 +278,43 @@ import axiosPrivate from "../api/axios";
 //       <div class="actions">
 //       <form.submit "Submit", :class => ["btn btn-danger", "fa fa-check"], :method => :post />
 //     </div>
-//    end 
+//    end
 //     </div>
 //   </div>
 
-//   <div class="row" id="buildings_listing"> 
+//   <div class="row" id="buildings_listing">
 //     <render partial: "buildings_list", locals: {buildings: @buildings} />
-//   </div> 
-//   <div class="field"> 
+//   </div>
+//   <div class="field">
 //     <form.label :battery_id />
 //     <form.number_field :battery_id />
-//   </div> 
-//   <div class="field"> 
+//   </div>
+//   <div class="field">
 //     <form.label :column_id />
 //     <form.number_field :column_id />
-//   </div> 
-//   <div class="field"> 
+//   </div>
+//   <div class="field">
 //     <form.label :elevator_id />
 //     <form.number_field :elevator_id />
-//   </div> 
-//   <div class="field"> 
+//   </div>
+//   <div class="field">
 //     <form.label :employee_id />
 //     <form.number_field :employee_id />
-//   </div> 
-//   <div class="field"> 
+//   </div>
+//   <div class="field">
 //     <form.label :result />
 //     <form.text_field :result />
-//   </div> 
-//   <div class="field"> 
+//   </div>
+//   <div class="field">
 //     <form.label :report />
 //     <form.text_area :report />
-//   </div> 
+//   </div>
   
-//   <div class="actions"> 
+//   <div class="actions">
 //     <form.submit />
-//   </div> 
+//   </div>
 //  end 
+// ⇈⇈⇈⇈⇈⇈⇈⇈⇈ RUBY ⇈⇈⇈⇈⇈⇈⇈⇈⇈
 
 
-
-// export default Login;
+export default InterventionRequest;
