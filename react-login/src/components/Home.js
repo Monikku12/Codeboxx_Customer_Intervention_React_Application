@@ -25,7 +25,7 @@ const Home = () => {
             <Interventions />
             <br />
             <div className="d-grid gap-2 mt-3">
-                <button link={InterventionRequest} className="btn btn-primary">
+                <button ref={InterventionRequest} className="btn btn-primary">
                     Intervention Request
                 </button>
             </div>
