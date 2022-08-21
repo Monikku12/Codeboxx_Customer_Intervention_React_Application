@@ -15,11 +15,11 @@ function App() {
             <Route path="/" element={<Layout />}>
                 {/* Public Routes */}
                 <Route path="login" element={<Login />} />
+                <Route path="InterventionRequest" element={<InterventionRequest />} />
 
                 {/* Private Routes */}
                 <Route element={<RequireAuth />}>
                     <Route path="/" element={<Home />} />
-                    <Route path="/InterventionRequest" element={<InterventionRequest />} />
                     {/* <Route path="/" element={<InterventionsTable />} /> */}
                 </Route>
 

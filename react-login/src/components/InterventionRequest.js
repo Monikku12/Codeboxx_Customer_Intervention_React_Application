@@ -204,14 +204,14 @@ const InterventionRequest = () => {
                             />
                         </div> */}
                         <div className="d-grid gap-2 mt-3">
-                            <button className="btn btn-primary">Sign in</button>
+                            <button className="btn btn-primary">Submit</button>
                         </div>
                     </div>
                 </form>
             </div>
         </section>
-    );
-};
+    )
+}
 
 
 // ⇊⇊⇊⇊⇊⇊⇊⇊⇊ RUBY ⇊⇊⇊⇊⇊⇊⇊⇊⇊
