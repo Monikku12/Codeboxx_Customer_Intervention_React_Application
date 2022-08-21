@@ -7,7 +7,7 @@ import Missing from "./components/Missing";
 import RequireAuth from "./components/RequireAuth";
 import { Routes, Route } from "react-router-dom";
 import React from "react";
-import InterventionsTable from "./components/InterventionsTable";
+// import InterventionsTable from "./components/InterventionsTable";
 
 function App() {
     return (
@@ -18,8 +18,8 @@ function App() {
 
                 {/* Private Routes */}
                 <Route element={<RequireAuth />}>
-                    {/* <Route path="/" element={<Home />} /> */}
-                    <Route path="/" element={<InterventionsTable />} />
+                    <Route path="/" element={<Home />} />
+                    {/* <Route path="/" element={<InterventionsTable />} /> */}
                 </Route>
 
                 {/* Error Routes 404 */}

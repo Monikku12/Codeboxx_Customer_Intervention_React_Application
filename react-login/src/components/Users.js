@@ -14,7 +14,7 @@ const Users = () => {
                 const response = await axiosPrivate.get("/customers/current", {
                     signal: controller.signal,
                 });
-                const customerId = response.data.map((customer) => customer.id);
+                console.log(response.data);
                 isMounted && setUsers(customerId);
             } catch (err) {
                 console.error(err);
