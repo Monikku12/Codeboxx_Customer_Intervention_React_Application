@@ -4,9 +4,9 @@ import Login from "./components/Login";
 import Home from "./components/Home";
 import Layout from "./components/Layout";
 import Missing from "./components/Missing";
+import InterventionRequest from "./components/InterventionRequest";
 import RequireAuth from "./components/RequireAuth";
 import { Routes, Route } from "react-router-dom";
-import React from "react";
 // import InterventionsTable from "./components/InterventionsTable";
 
 function App() {
@@ -19,6 +19,7 @@ function App() {
                 {/* Private Routes */}
                 <Route element={<RequireAuth />}>
                     <Route path="/" element={<Home />} />
+                    <Route path="/InterventionRequest" element={<InterventionRequest />} />
                     {/* <Route path="/" element={<InterventionsTable />} /> */}
                 </Route>
 

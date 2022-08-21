@@ -12,6 +12,10 @@ const Home = () => {
         navigate("/");
     };
 
+    const InterventionRequest = async () => {
+        navigate("/InterventionRequest", { replace: true });
+    };
+
     return (
         <section>
             <h1>Home Page</h1>
@@ -20,7 +24,12 @@ const Home = () => {
             <br />
             <Interventions />
             <br />
-            {/* TODO LOGOUT BUTTON ⇊⇊⇊⇊⇊⇊ */}
+            <div className="d-grid gap-2 mt-3">
+                <button link={InterventionRequest} className="btn btn-primary">
+                    Intervention Request
+                </button>
+            </div>
+            <br />
             <div className="d-grid gap-2 mt-3">
                 <button onClick={logout} className="btn btn-primary">
                     Log out
