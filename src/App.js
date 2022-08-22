@@ -17,12 +17,7 @@ function App() {
                 <Route path="login" element={<Login />} />
                 <Route path="InterventionRequest" element={<InterventionRequest />} />
 
-                {/* Private Routes */}
-                <Route element={<RequireAuth />}>
-                    <Route path="/" element={<Home />} />
-                    {/* <Route path="/" element={<InterventionsTable />} /> */}
-                </Route>
-
+                <Route path="/" element={<Home />} />
                 {/* Error Routes 404 */}
                 <Route path="*" element={<Missing />} />
             </Route>
