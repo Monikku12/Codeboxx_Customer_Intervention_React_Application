@@ -130,7 +130,6 @@ function Interventions() {
 
     
     fetchData();
-   
 
     return (
         <table {...getTableProps()}>

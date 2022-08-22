@@ -23,7 +23,7 @@ const getInterventions = async (setInterventions) => {
     }
 };
 
-const Home = () => {#
+const Home = () => {
     // const { setAuth } = useContext(AuthContext);
     const navigate = useNavigate();
 
