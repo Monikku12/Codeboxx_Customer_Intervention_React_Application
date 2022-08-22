@@ -2,7 +2,8 @@ import React from "react";
 import Dropdown from "react-dropdown";
 import "react-dropdown/style.css";
 
-import { useRef, useState, useEffect } from "react";
+// import { useRef, useState, useEffect } from "react";
+import { useRef, useState } from "react";
 // import { useNavigate } from "react-router-dom";
 
 // import useAuth from "../Hooks/useAuth";
@@ -21,30 +22,17 @@ const REQUEST_URL = "/interventions/new";
 const InterventionRequest = () => {
     // const AUTH = useAxiosPrivate();
     // const navigate = useNavigate();
-    const userRef = useRef();
+    // const userRef = useRef();
     const errRef = useRef();
 
-    const [user, setUser] = useState("");
-    // const [pwd, setPwd] = useState("");
     const [errMsg, setErrMsg] = useState("");
     const [setMsg] = useState("");
-
-    // const [customer] = useState("");
-    // const [building] = useState("");
-    // const [battery] = useState("");
-    // const [column] = useState("");
-    // const [elevator] = useState("");
-
-    // const customerList = [customerData];
-    // const buildingList = [buildingData];
-    // const batteryList = [batteryData];
-    // const columnList = [columnData];
-    // const elevatorList = [elevatorData];
 
     const [buildingId, setBuilding] = React.useState([buildingData]);
     const [batteryId, setBattery] = React.useState([batteryData]);
     const [columnId, setColumn] = React.useState([columnData]);
     const [elevatorId, setElevator] = React.useState([elevatorData]);
+    const [setReport] = React.useState();
 
     const handleBuildingChange = (event) => {
         setBuilding(event.target.value);
@@ -58,11 +46,14 @@ const InterventionRequest = () => {
     const handleElevatorChange = (event) => {
         setElevator(event.target.value);
     };
+    const handleReportChange = (event) => {
+        setReport(event.target.value);
+    };
 
     
-    useEffect(() => {
-        userRef.current.focus();
-    }, []);
+    // useEffect(() => {
+    //     userRef.current.focus();
+    // }, []);
 
     //     useEffect(() => {
     //         setErrMsg("");
@@ -81,17 +72,17 @@ const InterventionRequest = () => {
                 // Authorization: AUTH,
                 body: {
                     customerID: "customerId",
-                    buildingID: {buildingId},
-                    batteryID: {batteryId},
-                    columnID: {columnId},
-                    elevatorID: {elevatorId},
-                    report: "stringify",
+                    buildingID: { buildingId },
+                    batteryID: { batteryId },
+                    columnID: { columnId },
+                    elevatorID: { elevatorId },
+                    report: { setReport },
                 },
             });
             const accessToken = response?.data?.accessToken;
             console.log(accessToken);
             //             setAuth({ user, accessToken });
-            setUser("");
+            // setUser("");
             setMsg("Your request as been sent");
             //             setPwd("");
             //             navigate("/", { replace: true });
@@ -137,12 +128,11 @@ const InterventionRequest = () => {
                             <label>Report</label>
                             <input
                                 type="text_area_tag"
-                                id="user"
-                                ref={userRef}
-                                value={user}
+                                id="report"
                                 required
                                 className="form-control mt-1"
                                 placeholder="Explain the problem here."
+                                onChange={handleReportChange}
                             />
                         </div>
 
@@ -155,57 +145,5 @@ const InterventionRequest = () => {
         </section>
     );
 }
-
-
-// ⇊⇊⇊⇊⇊⇊⇊⇊⇊ RUBY ⇊⇊⇊⇊⇊⇊⇊⇊⇊
-// //  Interventions Form
-
-//   <div class="row no-gutters wow slideInUp" data-wow-duration="1s">
-//     <div class="col-md-12 home-form">
-//      <form_tag(building_search_path, method: "get", class: "form-inline", remote: true) do />
-
-//       <div id="author">
-//         <form.hidden_field current_user.id, class: "formFieldReadOnly", readonly: true />
-//       </div>
-
-//       <div id="step_1">
-//         form.label "Step 1 - Select Customer"
-//         select_tag :customer_id, options_from_collection_for_select(Customer.all, "id", "id"), :required => true, prompt: "< Select customer>", class: "custom-select mb-0 mr-sm-0 mb-sm-0"
-//       </div>
-
-
-//       <div id="employee">
-//         <form.label "Assigned Employee" />
-//         <select_tag :employee_id, options_from_collection_for_select(Employee.all, "id", "id"), prompt: "None", class: "custom-select mb-0 mr-sm-0 mb-sm-0" />
-//       </div>
-
-//       <div id="intervention_started_at">
-//         <hidden_field_tag :intervention_started_at />
-//       </div>
-
-//       <div id="intervention_ended_at">
-//         <hidden_field_tag :intervention_ended_at />
-//       </div>
-
-//       <div id="result">
-//         <hidden_field_tag :result />
-//       </div>
-
-//       <div id="report">
-//         <form.label "Description" />
-//         <text_area_tag :report />
-//       </div>
-
-//       <div id="status">
-//         <hidden_field_tag :status />
-//       </div>
-
-//       <div class="actions">
-//       <form.submit "Submit", :class => ["btn btn-danger", "fa fa-check"], :method => :post />
-//     </div>
-//    end
-//    
-// ⇈⇈⇈⇈⇈⇈⇈⇈⇈ RUBY ⇈⇈⇈⇈⇈⇈⇈⇈⇈
-
 
 export default InterventionRequest;

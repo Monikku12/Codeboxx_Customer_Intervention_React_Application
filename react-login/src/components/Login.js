@@ -41,9 +41,10 @@ const Login = () => {
                 //     withCredentials: true,
                 // }
             );
-            console.log(JSON.stringify(response?.data));
-            //console.log(JSON.stringify(response));
-            const accessToken = response?.data?.accessToken;
+            console.log("Token on login " + JSON.stringify(response?.data));
+            // console.log("Token response" + JSON.stringify(response));
+            const accessToken = response?.data;
+            console.log("const accessToken" + accessToken);
             setAuth({ user, accessToken });
             setUser("");
             setPwd("");
