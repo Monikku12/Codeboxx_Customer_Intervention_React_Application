@@ -1,7 +1,7 @@
 import { useMemo, useState, useEffect } from "react";
 import { useTable} from "react-table";
-// import axiosPrivate from "../api/axios";
-import axios from "axios";
+import axiosPrivate from "../api/axios";
+// import axios from "axios";
 // import InterventionsTable from "./InterventionsTable";
 // import axiosApiCall from "../api/axios";
 // import useAxiosPrivate from "../Hooks/useAxiosPrivate";
@@ -9,41 +9,41 @@ import useAuth from "../Hooks/useAuth";
 
 function Interventions() {
     // data state to store the Interventions API data. Its initial value is an empty array
-    // const INTERVENTION_URL = "/customers/current";
+    const INTERVENTION_URL = "/customers/current";
     const [data, setData] = useState([]);
     // const axiosPrivate = useAxiosPrivate();
-    // const auth = useAuth();
+    const auth = useAuth();
     // const { cookie } = useAxiosPrivate();
-    // const token = `Bearer ${useAuth?.accessToken}`;
-    // console.log("Token is:", token);
+    const token = `Bearer ${useAuth?.accessToken}`;
+    console.log("Token is:", token);
     
     const fetchData = async () => {
         try {
-            const response = axios.get(
-                "./interventionData"
-                // const response = await axiosPrivate.get(
-                //     {
-                //         INTERVENTION_URL,
-                //         Authorization: `Bearer ${auth?.accessToken}`,
-                //         // Authorization: useAxiosPrivate,
-                //     }
-                // Authorization: `Bearer ${useAuth?.accessToken}`,
-                // cookie?.header,
+            // const response = axios.get(
+                // "./interventionData"
+            const response = await axiosPrivate.get(
+                INTERVENTION_URL,
+                {
+                    Authorization: `Bearer ${auth?.accessToken}`,
+                    //         // Authorization: useAxiosPrivate,
+                    //     }
+                    // Authorization: `Bearer ${useAuth?.accessToken}`,
+                    // cookie?.header,
 
-                // {
-                //     headers: {
-                //         "Authorization": cookie,
-                //     },
-                // }
+                    // {
+                    //     headers: {
+                    //         "Authorization": cookie,
+                    //     },
+                    // }
 
-                // {
-                //     headers: {
-                //         // "Content-Type": "application/json",
-                //         Authorization: `Bearer ${auth?.accesstoken}`,
-                //         // "Authorization": "Bearer " + auth?.accessToken,
-                //     },
-                //     // withCredentials: true,
-                // }
+                    // {
+                    //     headers: {
+                    //         // "Content-Type": "application/json",
+                    //         Authorization: `Bearer ${auth?.accesstoken}`,
+                    //         // "Authorization": "Bearer " + auth?.accessToken,
+                    //     },
+                    //     // withCredentials: true,
+                }
             );
             setData(response.data);
             const token = `Bearer ${useAuth?.accessToken}`;
