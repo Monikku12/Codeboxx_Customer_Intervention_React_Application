@@ -9,16 +9,16 @@ const LOGIN_URL = "/authenticate?email=customer1%40business.com&password=passwor
 
 const Login = () => {
     const { setAuth } = useAuth();
-
+    
     const navigate = useNavigate();
-
+    
     const userRef = useRef();
     const errRef = useRef();
-
+    
     const [user, setUser] = useState("");
     const [pwd, setPwd] = useState("");
     const [errMsg, setErrMsg] = useState("");
-
+    
     useEffect(() => {
         userRef.current.focus();
     }, []);
@@ -35,17 +35,18 @@ const Login = () => {
                 LOGIN_URL,
                 JSON.stringify({ email: user, password: pwd }),
                 // {
-                //     headers: {
-                //         "Content-Type": "application/json",
-                //     },
-                //     withCredentials: true,
-                // }
+                    //     headers: {
+                        //         "Content-Type": "application/json",
+                        //     },
+                        //     withCredentials: true,
+                        // }
             );
             console.log("Token on login " + JSON.stringify(response?.data));
             // console.log("Token response" + JSON.stringify(response));
-            const accessToken = response?.data;
-            console.log("const accessToken" + accessToken);
+            const accessToken = response?.data?.access_token;
+            console.log("const accessToken " + accessToken);
             setAuth({ user, accessToken });
+            console.log("setAuth Login: " + setAuth({ user, accessToken }));
             setUser("");
             setPwd("");
             navigate("/", { replace: true });

@@ -32,7 +32,7 @@ const InterventionRequest = () => {
     const [batteryId, setBattery] = React.useState([batteryData]);
     const [columnId, setColumn] = React.useState([columnData]);
     const [elevatorId, setElevator] = React.useState([elevatorData]);
-    const [setReport] = React.useState();
+    const [report, setReport] = React.useState();
 
     const handleBuildingChange = (event) => {
         setBuilding(event.target.value);
@@ -129,6 +129,7 @@ const InterventionRequest = () => {
                             <input
                                 type="text_area_tag"
                                 id="report"
+                                value={report}
                                 required
                                 className="form-control mt-1"
                                 placeholder="Explain the problem here."
