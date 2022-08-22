@@ -22,30 +22,27 @@ function Interventions() {
         try {
             // const response = axios.get(
                 // "./interventionData"
-            const response = await axiosPrivate.get(
-                INTERVENTION_URL,
-                {
+            const response = await axiosPrivate.get(INTERVENTION_URL, {
+                Authorization: `Bearer ${auth?.accessToken}`,
+                //         // Authorization: useAxiosPrivate,
+                //     }
+                // Authorization: `Bearer ${useAuth?.accessToken}`,
+                // cookie?.header,
+
+                // {
+                headers: {
                     Authorization: `Bearer ${auth?.accessToken}`,
-                    //         // Authorization: useAxiosPrivate,
-                    //     }
-                    // Authorization: `Bearer ${useAuth?.accessToken}`,
-                    // cookie?.header,
+                },
+                // }
 
-                    // {
-                    //     headers: {
-                    //         "Authorization": cookie,
-                    //     },
-                    // }
-
-                    // {
-                    //     headers: {
-                    //         // "Content-Type": "application/json",
-                    //         Authorization: `Bearer ${auth?.accesstoken}`,
-                    //         // "Authorization": "Bearer " + auth?.accessToken,
-                    //     },
-                    //     // withCredentials: true,
-                }
-            );
+                // {
+                //     headers: {
+                //         // "Content-Type": "application/json",
+                //         Authorization: `Bearer ${auth?.accesstoken}`,
+                //         // "Authorization": "Bearer " + auth?.accessToken,
+                //     },
+                //     // withCredentials: true,
+            });
             setData(response.data);
             const token = `Bearer ${useAuth?.accessToken}`;
             console.log("Token is:", token);
