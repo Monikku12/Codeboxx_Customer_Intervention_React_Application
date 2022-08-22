@@ -118,23 +118,23 @@ const InterventionRequest = () => {
                     <h3 className="Auth-form-title">Intervention Request</h3>
                     <div className="Auth-form-content">
                         <div className="form-group mt-3">
-                            <label htmlFor="user">Building</label>
+                            <label>Building</label>
                             <Dropdown options={[buildingData.id]} value={buildingId} onChange={handleBuildingChange} placeholder="Select Building" />
                         </div>
                         <div className="form-group mt-3">
-                            <label htmlFor="user">Battery</label>
+                            <label>Battery</label>
                             <Dropdown options={[batteryData.id]} value={batteryId} onChange={handleBatteryChange} placeholder="Select Battery" />
                         </div>
                         <div className="form-group mt-3">
-                            <label htmlFor="user">Column</label>
+                            <label>Column</label>
                             <Dropdown options={[columnData.id]} value={columnId} onChange={handleColumnChange} placeholder="Select Column" />
                         </div>
                         <div className="form-group mt-3">
-                            <label htmlFor="user">Elevator</label>
+                            <label>Elevator</label>
                             <Dropdown options={[elevatorData.id]} value={elevatorId} onChange={handleElevatorChange} placeholder="Select Elevator" />
                         </div>
                         <div className="form-group mt-3">
-                            <label htmlFor="user">Report</label>
+                            <label>Report</label>
                             <input
                                 type="text_area_tag"
                                 id="user"
