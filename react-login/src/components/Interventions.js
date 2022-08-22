@@ -13,9 +13,10 @@ function Interventions() {
     const [data, setData] = useState([]);
     // const axiosPrivate = useAxiosPrivate();
     const auth = useAuth();
+    console.log("Intervention auth: " + auth);
     // const { cookie } = useAxiosPrivate();
     const token = `Bearer ${useAuth?.accessToken}`;
-    console.log("Token is:", token);
+    console.log("Intervention Token: ", token);
     
     const fetchData = async () => {
         try {
