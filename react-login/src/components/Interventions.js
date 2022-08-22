@@ -1,7 +1,7 @@
 import { useMemo, useState, useEffect } from "react";
 import { useTable} from "react-table";
-import axiosPrivate from "../api/axios";
-// import axios from "axios";
+// import axiosPrivate from "../api/axios";
+import axios from "axios";
 // import InterventionsTable from "./InterventionsTable";
 // import axiosApiCall from "../api/axios";
 // import useAxiosPrivate from "../Hooks/useAxiosPrivate";
@@ -9,22 +9,24 @@ import useAuth from "../Hooks/useAuth";
 
 function Interventions() {
     // data state to store the Interventions API data. Its initial value is an empty array
-    const INTERVENTION_URL = "/customers/current";
+    // const INTERVENTION_URL = "/customers/current";
     const [data, setData] = useState([]);
     // const axiosPrivate = useAxiosPrivate();
-    const auth = useAuth();
+    // const auth = useAuth();
     // const { cookie } = useAxiosPrivate();
-    const token = `Bearer ${useAuth?.accessToken}`;
-    console.log("Token is:", token);
+    // const token = `Bearer ${useAuth?.accessToken}`;
+    // console.log("Token is:", token);
     
     const fetchData = async () => {
         try {
-            const response = await axiosPrivate.get(
-                {
-                    INTERVENTION_URL,
-                    Authorization: `Bearer ${auth?.accessToken}`,
-                    // Authorization: useAxiosPrivate,
-                }
+            const response = axios.get(
+                "./interventionData"
+                // const response = await axiosPrivate.get(
+                //     {
+                //         INTERVENTION_URL,
+                //         Authorization: `Bearer ${auth?.accessToken}`,
+                //         // Authorization: useAxiosPrivate,
+                //     }
                 // Authorization: `Bearer ${useAuth?.accessToken}`,
                 // cookie?.header,
 
@@ -66,15 +68,18 @@ function Interventions() {
                 columns: [
                     {
                         Header: "ID",
-                        accessor: "customer.interventions.id",
+                        accessor: "fact_interventions.id",
+                        // accessor: "customer.interventions.id",
                     },
                     {
                         Header: "Status",
-                        accessor: "customer.interventions.status",
+                        accessor: "fact_interventions.Status",
+                        // accessor: "customer.interventions.status",
                     },
                     {
                         Header: "Result",
-                        accessor: "customer.interventions.result",
+                        accessor: "fact_interventions.Result",
+                        // accessor: "customer.interventions.result",
                     },
                 ],
             },
@@ -83,21 +88,25 @@ function Interventions() {
                 columns: [
                     {
                         Header: "Building",
-                        accessor: "interventions.building.address",
+                        accessor: "interventions.building.BuildingID",
+                        // accessor: "interventions.building.address",
                     },
                     {
                         Header: "Battery",
-                        accessor: "interventions.battery.id",
+                        accessor: "interventions.BatteryID",
+                        // accessor: "interventions.battery.id",
                         Cell: ({ cell: { value } }) => (value ? { value } : "-"),
                     },
                     {
                         Header: "Column",
-                        accessor: "interventions.column.id",
+                        accessor: "interventions.ColumnID",
+                        // accessor: "interventions.column.id",
                         Cell: ({ cell: { value } }) => (value ? { value } : "-"),
                     },
                     {
                         Header: "Elevator",
-                        accessor: "interventions.elevator.id",
+                        accessor: "interventions.ElevatorID",
+                        // accessor: "interventions.elevator.id",
                         Cell: ({ cell: { value } }) => (value ? { value } : "-"),
                     },
                 ],
