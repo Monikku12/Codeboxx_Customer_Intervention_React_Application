@@ -1,5 +1,6 @@
 import React from "react";
-import { useState, useEffect } from "react";
+// import { useState, useEffect } from "react";
+import { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import mainLogo from "../images/logo.png";
@@ -31,14 +32,15 @@ const handleSubmit = async (email, password, navigate) => {
 
         localStorage.setItem("bearerToken", token);
 
-        console.log("res is :", res);
+        // console.log("res is :", res);
 
         if (res.status === 200) {
-            navigate("/", { replace: true });
+            navigate("/Home", { replace: true });
         }
     } catch (error) {
         console.warn("[handleSubmit] Error: ", error);
     }
+    console.log("Login!")
 };
 
 const Login = () => {
@@ -60,7 +62,7 @@ const Login = () => {
     return (
         <section>
             <div className="Auth-form-container">
-                {/* <form className="Auth-form" onSubmit={handleSubmit}> */}
+                <form className="Auth-form">
                 <img className="mainLogo" src={mainLogo} alt="Rocket Elevators Logo"></img>
                 {/* <p ref={errRef} className={errMsg ? "errmsg" : "offscreen"} aria-live="assertive">
                     {errMsg}
@@ -94,7 +96,7 @@ const Login = () => {
                         </button>
                     </div>
                 </div>
-                {/* </form> */}
+                </form>
             </div>
         </section>
     );

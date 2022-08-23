@@ -1,26 +1,19 @@
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
+import { Routes, Route } from "react-router-dom";
 import Login from "./components/Login";
 import Home from "./components/Home";
-import Layout from "./components/Layout";
-import Missing from "./components/Missing";
 import InterventionRequest from "./components/InterventionRequest";
-import RequireAuth from "./components/RequireAuth";
-import { Routes, Route } from "react-router-dom";
-// import InterventionsTable from "./components/InterventionsTable";
+// import Interventions from "./components/Interventions";
 
 function App() {
     return (
         <Routes>
-            <Route path="/" element={<Layout />}>
-                {/* Public Routes */}
-                <Route path="login" element={<Login />} />
-                <Route path="InterventionRequest" element={<InterventionRequest />} />
-
-                <Route path="/" element={<Home />} />
-                {/* Error Routes 404 */}
-                <Route path="*" element={<Missing />} />
-            </Route>
+            {/* <Route path="login" element={<Login />} /> */}
+            <Route path="/InterventionRequest" element={<InterventionRequest />} />
+            <Route path="/" element={<Login />} />
+            <Route path="/Home" element={<Home />} />
+            {/* <Route path="/" element={<Home />} /> */}
         </Routes>
     );
 }
