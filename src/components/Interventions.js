@@ -1,5 +1,4 @@
-import { useMemo, useState, useEffect } from "react";
-// import { useTable} from "react-table";
+import { useState, useEffect } from "react";
 import axios from "axios";
 
 const requestOptions = {
@@ -10,7 +9,6 @@ const requestOptions = {
 
 const getInterventions = async (setInterventions) => {
     try {
-        // console.log("requestOptions:", requestOptions);
 
         const res = await axios.get("/customers/current", requestOptions);
         console.log("[getInterventions] res is :", res);
@@ -21,112 +19,66 @@ const getInterventions = async (setInterventions) => {
     }
 };
 
-function Interventions() {
-    
-    const [interventions, setInterventions] = useState([]);
-    
+const Interventions = () => {
     useEffect(() => {
         console.log("useEffect! Get data.");
         getInterventions(setInterventions);
-    }, []);    
+    }, []);
 
-    // const columns = useMemo(
-    //     () => [
-    //         {
-    //             Header: "Interventions",
-    //             columns: [
-    //                 {
-    //                     Header: "ID",
-    //                     accessor: "fact_interventions.id",
-    //                     // accessor: "customer.interventions.id",
-    //                 },
-    //                 {
-    //                     Header: "Status",
-    //                     accessor: "fact_interventions.Status",
-    //                     // accessor: "customer.interventions.status",
-    //                 },
-    //                 {
-    //                     Header: "Result",
-    //                     accessor: "fact_interventions.Result",
-    //                     // accessor: "customer.interventions.result",
-    //                 },
-    //             ],
-    //         },
-    //         {
-    //             Header: "Details",
-    //             columns: [
-    //                 {
-    //                     Header: "Building",
-    //                     accessor: "interventions.building.BuildingID",
-    //                     // accessor: "interventions.building.address",
-    //                 },
-    //                 {
-    //                     Header: "Battery",
-    //                     accessor: "interventions.BatteryID",
-    //                     // accessor: "interventions.battery.id",
-    //                     // Cell: ({ cell: { value } }) => (value ? { value } : "-"),
-    //                 },
-    //                 {
-    //                     Header: "Column",
-    //                     accessor: "interventions.ColumnID",
-    //                     // accessor: "interventions.column.id",
-    //                     // Cell: ({ cell: { value } }) => (value ? { value } : "-"),
-    //                 },
-    //                 {
-    //                     Header: "Elevator",
-    //                     accessor: "interventions.ElevatorID",
-    //                     // accessor: "interventions.elevator.id",
-    //                     // Cell: ({ cell: { value } }) => (value ? { value } : "-"),
-    //                 },
-    //             ],
-    //         },
-    //     ],
-    //     []
-    // );
-        
-    // const tableInstance = useTable({ columns, interventions });
+    const [interventions, setInterventions] = useState([]);
 
-    // const {
-    //     getTableProps, // table props from react-table
-    //     getTableBodyProps, // table body props from react-table
-    //     headerGroups, // headerGroups, if your table has groupings
-    //     rows, // rows for the table based on the data passed
-    //     prepareRow, // Prepare the row (this function needs to be called for each row before getting the row props)
-    // } = tableInstance;
-
-    // useEffect(() => {
-    //     console.log(headerGroups);
-    //     console.log(rows);
-    // });
-
+    // const interventionsData = interventions.interventions;
+    console.log("interventions: ", interventions);
+    // console.log("interventionsData ", interventionsData);    
     
-    // interventions();
+    // const renderTableHeader = () => {
+    //     let header = Object.keys(interventions[0]);
+    //     return header.map((key, index) => {
+    //         return <th key={index}>{key.toUpperCase()}</th>;
+    //     });
+    // };
 
-    // return (
-    //     <table {...getTableProps()}>
-    //         <thead>
-    //             {headerGroups.map((headerGroup) => (
-    //                 <tr {...headerGroup.getHeaderGroupProps()}>
-    //                     {headerGroup.headers.map((column) => (
-    //                         <th {...column.getHeaderProps()}>{column.render("Header")}</th>
-    //                     ))}
-    //                 </tr>
-    //             ))}
-    //         </thead>
-    //         <tbody {...getTableBodyProps()}>
-    //             {rows.map((row, i) => {
-    //                 prepareRow(row);
-    //                 return (
-    //                     <tr {...row.getRowProps()}>
-    //                         {row.cells.map((cell) => {
-    //                             return <td {...cell.getCellProps()}>{cell.render("Cell")}</td>;
-    //                         })}
-    //                     </tr>
-    //                 );
-    //             })}
-    //         </tbody>
-    //     </table>
-    // );
-}
+    const renderTableHeader = () => {
+        if (interventions.length !== 0 && interventions.interventions.length !== 0) {
+            let header = Object.keys(interventions[0]);
+            return header.map((key, index) => {
+                return <th key={index}>{key.toUpperCase()}</th>;
+            });
+        } else {
+            return <th></th>;
+        }
+    };
+
+    const renderTableData = () => {
+        return interventions.map((interventions, index) => {
+            const { id, status, result, building, battery, column, elevator, } = interventions;
+            return (
+                <tr key={id}>
+                    <td>{id}</td>
+                    <td>{status}</td>
+                    <td>{result}</td>
+                    <td>{building.id}</td>
+                    <td>{battery.id}</td>
+                    <td>{column.id}</td>
+                    <td>{elevator.id}</td>
+                </tr>
+            );
+        });
+    };
+
+    return (
+        <div>
+            <h1 id="title">Interventions</h1>
+            <table id="interventions">
+                <thead>
+                    <tr>{interventions.length !== 0 && interventions.interventions.length !== 0 && renderTableHeader()}</tr>
+                </thead>
+                <tbody>
+                    <tr>{interventions.length !== 0 && interventions.interventions.length !== 0 && renderTableData()}</tr>
+                </tbody>
+            </table>
+        </div>
+    );
+};
 
 export default Interventions;

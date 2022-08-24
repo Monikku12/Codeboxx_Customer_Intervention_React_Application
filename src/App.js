@@ -13,6 +13,8 @@ function App() {
             <Route path="/InterventionRequest" element={<InterventionRequest />} />
             <Route path="/" element={<Login />} />
             <Route path="/Home" element={<Home />} />
+            <Route path="/test" element={<Home />} />
+
             {/* <Route path="/" element={<Home />} /> */}
         </Routes>
     );

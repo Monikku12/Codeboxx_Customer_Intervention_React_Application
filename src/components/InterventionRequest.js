@@ -14,7 +14,7 @@ const InterventionRequest = () => {
     // const AUTH = useAxiosPrivate();
     // const navigate = useNavigate();
     // const userRef = useRef();
-    const errRef = useRef();
+    // const errRef = useRef();
 
     // const [errMsg, setErrMsg] = useState("");
     // const [setMsg] = useState("");

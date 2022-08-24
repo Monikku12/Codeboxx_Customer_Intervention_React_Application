@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
-import { useEffect, useState } from "react";
-import axios from "axios";
+// import { useEffect, useState } from "react";
+// import axios from "axios";
 import Interventions from "./Interventions";
 
 // const requestOptions = {
@@ -56,11 +56,10 @@ const Home = () => {
             <br />
             <Interventions />
             <br />
-            {/* {interventions.length != 0 && } */}
 
             <div className="d-grid gap-2 mt-3">
                 <button onClick={interventionRequest} className="btn btn-primary">
-                    Intervention Request
+                    New Intervention Request
                 </button>
             </div>
             <br />
