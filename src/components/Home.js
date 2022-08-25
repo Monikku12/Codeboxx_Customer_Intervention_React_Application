@@ -52,7 +52,7 @@ const Home = () => {
         <section>
             <h1>Home Page</h1>
             <br />
-            <p>The interventions will be displayed here.</p>
+            <p>Your interventions are listed in the table below.</p>
             <br />
             <Interventions />
             <br />

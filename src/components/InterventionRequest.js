@@ -1,98 +1,139 @@
-import React from "react";
-// import Dropdown from "react-dropdown";
+import { useNavigate } from "react-router-dom";
+import Dropdown from "react-dropdown";
 import "react-dropdown/style.css";
 import mainLogo from "../images/logo.png";
-// import { useRef, useState, useEffect } from "react";
-// import { useRef, useState } from "react";
-import { useRef } from "react";
-// import { useNavigate } from "react-router-dom";
-// import axios from "../api/axios";
+import { useState, useEffect } from "react";
+import axios from "axios";
 
-// const REQUEST_URL = "/interventions/new";
+
+const requestOptions = {
+    headers: {
+        Authorization: localStorage.getItem("bearerToken"),
+    },
+};
+
+const getBuildingByCustomerID = async (setBuildings) => {
+    try {
+        const res = await axios.get("/buildings", requestOptions);
+        // console.log("[getBuildingByCustomerID] res is :", res);
+        
+        setBuildings(res.data);
+    } catch (error) {
+        console.warn("[getBuildingByCustomerID] Error: ", error);
+    }
+};
+
+const getBatteriesByBuildingID = async (buildingID, setBatteries) => {
+    // console.log("getBatteriesByBuildingID buildingID is:", buildingID);
+    try {
+        const res = await axios.get(`/buildings/${buildingID}/batteries`, requestOptions);
+        // console.log("getBatteriesByBuildingID res is:", res);
+        
+        setBatteries(res.data);
+    } catch (error) {
+        console.warn("[getBatteriesByBuildingID] Error: ", error);
+    }
+};
+
+const getColumnsByBatteryID = async (batteryID, setColumns) => {
+    // console.log("getColumnsByBatteryID batteryID is:", batteryID);
+    try {
+        const res = await axios.get(`/batteries/${batteryID}/columns`, requestOptions);
+        // console.log("getColumnsByBatteryID res is:", res);
+        
+        setColumns(res.data);
+    } catch (error) {
+        console.warn("[getColumnsByBatteryID] Error: ", error);
+    }
+};
+
+const getElevatorsByColumnID = async (columnID, setElevators) => {
+    console.log("getElevatorsByColumnID columnID is:", columnID);
+    try {
+        const res = await axios.get(`/columns/${columnID}/elevators`, requestOptions);
+        console.log("getElevatorsByColumnID res is:", res);
+        
+        setElevators(res.data);
+    } catch (error) {
+        console.warn("[getElevatorsByColumnID] Error: ", error);
+    }
+};
 
 const InterventionRequest = () => {
-    // const AUTH = useAxiosPrivate();
-    // const navigate = useNavigate();
-    // const userRef = useRef();
-    // const errRef = useRef();
+    const navigate = useNavigate();
 
-    // const [errMsg, setErrMsg] = useState("");
-    // const [setMsg] = useState("");
-
-    // const [buildingId, setBuilding] = React.useState([buildingData]);
-    // const [batteryId, setBattery] = React.useState([batteryData]);
-    // const [columnId, setColumn] = React.useState([columnData]);
-    // const [elevatorId, setElevator] = React.useState([elevatorData]);
-    // const [report, setReport] = React.useState();
-
-    // const handleBuildingChange = (event) => {
-    //     setBuilding(event.target.value);
-    // };
-    // const handleBatteryChange = (event) => {
-    //     setBattery(event.target.value);
-    // };
-    // const handleColumnChange = (event) => {
-    //     setColumn(event.target.value);
-    // };
-    // const handleElevatorChange = (event) => {
-    //     setElevator(event.target.value);
-    // };
-    // const handleReportChange = (event) => {
-    //     setReport(event.target.value);
-    // };
-
-    
-    // useEffect(() => {
-    //     userRef.current.focus();
-    // }, []);
-
-    //     useEffect(() => {
-    //         setErrMsg("");
-    //     }, [user, pwd]);
-
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-
-    //     try {
-    //         const response = await axiosPrivate.post(REQUEST_URL, {
-    //             // JSON.stringify({ email: user, password: pwd }),
-    //             headers: {
-    //                 "Content-Type": "application/json",
-    //             },
-    //             withCredentials: true,
-    //             // Authorization: AUTH,
-    //             body: {
-    //                 customerID: "customerId",
-    //                 buildingID: { buildingId },
-    //                 batteryID: { batteryId },
-    //                 columnID: { columnId },
-    //                 elevatorID: { elevatorId },
-    //                 report: { setReport },
-    //             },
-    //         });
-    //         const accessToken = response?.data?.accessToken;
-    //         console.log(accessToken);
-    //         //             setAuth({ user, accessToken });
-    //         // setUser("");
-    //         setMsg("Your request as been sent");
-    //         //             setPwd("");
-    //         //             navigate("/", { replace: true });
-    //     } catch (err) {
-    //         if (!err?.response) {
-    //             setErrMsg("No Server Response");
-    //         } else if (err.response?.status === 403) {
-    //             setErrMsg("Oops! Something went wrong. Error 403");
-    //         } else {
-    //             setErrMsg("Request Failed");
-    //         }
-    //         errRef.current.focus();
-    //     }
+    const logout = async () => {
+        localStorage.clear();
+        navigate("/");
+        console.log("logout!");
+        console.log(localStorage.getItem("bearerToken"));
     };
 
+    const [buildings, setBuildings] = useState([]);
+    const [batteries, setBatteries] = useState([]);
+    const [columns, setColumns] = useState([]);
+    const [elevators, setElevators] = useState([]);
+    
+    // const buildingID = buildings.id;
+    const buildingID = 1;
+    // console.log("buildingID is : ", buildingID);
+    
+    // const batteryID = batteries.id;
+    const batteryID = 1;
+    // console.log("batteryID is : ", batteryID);
+
+    // const columnID = columns.id;
+    const columnID = 1;
+    // console.log("columnID is : ", columnID);
+
+    // const elevatorID = elevators.id;
+    const elevatorID = 1;
+    console.log("elevatorID is : ", elevatorID);
+    
+    // console.log("buildings: ", buildings);
+    // console.log("batteries: ", batteries);
+    // console.log("columns: ", columns);
+    console.log("elevators: ", elevators);
+    
+    useEffect(() => {
+        console.log("useEffect! Get Buildings");
+        getBuildingByCustomerID(setBuildings);
+    }, []);
+
+    useEffect(() => {
+        console.log("useEffect! Get Batteries");
+        getBatteriesByBuildingID(buildingID, setBatteries);
+    }, [buildingID]);
+    
+    useEffect(() => {
+        console.log("useEffect! Get Columns");
+        getColumnsByBatteryID(batteryID, setColumns);
+    }, [batteryID]);
+
+    useEffect(() => {
+        console.log("useEffect! Get Elevators");
+        getElevatorsByColumnID(columnID, setElevators);
+    }, [columnID]);
+    
+    // const postRequest = async (setRequest) => {
+        //     try {
+            //         const res = await axios.post(POST_REQUEST_URL, requestOptions);
+    //         console.log("[getRequest] res is :", res);
+    
+    //         setRequest(res.data);
+    //     } catch (error) {
+    //         console.warn("[getRequest] Error: ", error);
+    //     }
+    // };
+    
+    // };
+    
     return (
         <section>
+            <p>Form comes here!</p>
             <div className="Auth-form-container">
-                <form className="Auth-form" onSubmit={handleSubmit}>
+                {/* <form className="Auth-form" onSubmit={handleSubmit}> */}
+                <form className="Auth-form">
                     <img className="mainLogo" src={mainLogo} alt="Rocket Elevators Logo"></img>
                     {/* <p ref={errRef} className={errMsg ? "errmsg" : "offscreen"} aria-live="assertive">
                         {errMsg}
@@ -101,7 +142,8 @@ const InterventionRequest = () => {
                     <div className="Auth-form-content">
                         <div className="form-group mt-3">
                             <label>Building</label>
-                            {/* <Dropdown options={[buildingData.id]} value={buildingId} onChange={handleBuildingChange} placeholder="Select Building" /> */}
+                            {/* <Dropdown options={[buildings.id]} value={buildingID} onChange={handleBuildingChange} placeholder="Select Building" /> */}
+                            {/* <Dropdown options={[buildings.id]} value={buildingID} placeholder="Select Building" /> */}
                         </div>
                         <div className="form-group mt-3">
                             <label>Battery</label>
@@ -117,25 +159,29 @@ const InterventionRequest = () => {
                         </div>
                         <div className="form-group mt-3">
                             <label>Report</label>
-                            <input
+                            {/* <input
                                 type="text_area_tag"
                                 id="report"
                                 required
                                 className="form-control mt-1"
                                 placeholder="Explain the problem here."
-                                // onChange={handleReportChange}
-                            />
+                                onChange={handleReportChange}
+                            /> */}
                         </div>
 
-                        <div className="d-grid gap-2 mt-3">
+                        {/* <div className="d-grid gap-2 mt-3">
                             <button className="btn btn-primary">Submit</button>
-                        </div>
+                        </div> */}
                     </div>
                 </form>
             </div>
+            <div className="d-grid gap-2 mt-3">
+                <button onClick={logout} className="btn btn-primary">
+                    Log out
+                </button>
+            </div>
         </section>
- 
     );
-}
+};
 
 export default InterventionRequest;
