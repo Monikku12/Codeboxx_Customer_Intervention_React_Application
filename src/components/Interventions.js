@@ -1,168 +1,81 @@
-import { useMemo, useState, useEffect } from "react";
-import { useTable} from "react-table";
-import axiosPrivate from "../api/axios";
-// import axios from "axios";
-// import InterventionsTable from "./InterventionsTable";
-// import axiosApiCall from "../api/axios";
-// import useAxiosPrivate from "../Hooks/useAxiosPrivate";
-import useAuth from "../Hooks/useAuth";
+import { useState, useEffect } from "react";
+import axios from "axios";
 
-function Interventions() {
-    // data state to store the Interventions API data. Its initial value is an empty array
-    const INTERVENTION_URL = "/customers/current";
-    const [data, setData] = useState([]);
-    // const axiosPrivate = useAxiosPrivate();
-    const auth = useAuth();
-    console.log("Intervention auth: " + auth);
-    // const { cookie } = useAxiosPrivate();
-    const token = `Bearer ${useAuth?.accessToken}`;
-    console.log("Intervention Token: ", token);
-    
-    const fetchData = async () => {
-        try {
-            // const response = axios.get(
-                // "./interventionData"
-            const response = await axiosPrivate.get(INTERVENTION_URL, {
-                Authorization: `Bearer ${auth?.accessToken}`,
-                //         // Authorization: useAxiosPrivate,
-                //     }
-                // Authorization: `Bearer ${useAuth?.accessToken}`,
-                // cookie?.header,
+const GET_COSTUMER_URL = "/customers/current";
 
-                // {
-                headers: {
-                    Authorization: `Bearer ${auth?.accessToken}`,
-                },
-                // }
+const requestOptions = {
+    headers: {
+        Authorization: localStorage.getItem("bearerToken"),
+    },
+};
 
-                // {
-                //     headers: {
-                //         // "Content-Type": "application/json",
-                //         Authorization: `Bearer ${auth?.accesstoken}`,
-                //         // "Authorization": "Bearer " + auth?.accessToken,
-                //     },
-                //     // withCredentials: true,
-            });
-            setData(response.data);
-            const token = `Bearer ${useAuth?.accessToken}`;
-            console.log("Token is:", token);
-        } catch (err) {
-            if (err.response) {
-                // Not in the 200 response range
-                console.log(err.response.data);
-                console.log(err.response.status);
-                console.log(err.response.headers);
-            } else {
-                console.log('Error: $(err.message)');
-                console.log(err);
-            }
-        }
+const getCustomer = async (setCustomer) => {
+    try {
+        const res = await axios.get(GET_COSTUMER_URL, requestOptions);
+        // console.log("[getCustomer] res is :", res);
+
+        setCustomer(res.data);
+    } catch (error) {
+        console.warn("[getCustomer] Error: ", error);
     }
+};
 
-    const columns = useMemo(
-        () => [
-            {
-                Header: "Interventions",
-                columns: [
-                    {
-                        Header: "ID",
-                        accessor: "fact_interventions.id",
-                        // accessor: "customer.interventions.id",
-                    },
-                    {
-                        Header: "Status",
-                        accessor: "fact_interventions.Status",
-                        // accessor: "customer.interventions.status",
-                    },
-                    {
-                        Header: "Result",
-                        accessor: "fact_interventions.Result",
-                        // accessor: "customer.interventions.result",
-                    },
-                ],
-            },
-            {
-                Header: "Details",
-                columns: [
-                    {
-                        Header: "Building",
-                        accessor: "interventions.building.BuildingID",
-                        // accessor: "interventions.building.address",
-                    },
-                    {
-                        Header: "Battery",
-                        accessor: "interventions.BatteryID",
-                        // accessor: "interventions.battery.id",
-                        Cell: ({ cell: { value } }) => (value ? { value } : "-"),
-                    },
-                    {
-                        Header: "Column",
-                        accessor: "interventions.ColumnID",
-                        // accessor: "interventions.column.id",
-                        Cell: ({ cell: { value } }) => (value ? { value } : "-"),
-                    },
-                    {
-                        Header: "Elevator",
-                        accessor: "interventions.ElevatorID",
-                        // accessor: "interventions.elevator.id",
-                        Cell: ({ cell: { value } }) => (value ? { value } : "-"),
-                    },
-                ],
-            },
-        ],
-        []
-    );
-        
-    const tableInstance = useTable({ columns, data });
-
-    const {
-        getTableProps, // table props from react-table
-        getTableBodyProps, // table body props from react-table
-        headerGroups, // headerGroups, if your table has groupings
-        rows, // rows for the table based on the data passed
-        prepareRow, // Prepare the row (this function needs to be called for each row before getting the row props)
-    } = tableInstance;
-
+const Interventions = () => {
     useEffect(() => {
-        console.log(headerGroups);
-        console.log(rows);
-    });
+        // console.log("useEffect! Get data.");
+        getCustomer(setCustomer);
+    }, []);
 
-    
-    fetchData();
-   
+    const [customer, setCustomer] = useState([]);
+    // console.log("customer: ", customer);
+
+    const renderTableHeader = () => {
+        if (customer.length !== 0 && customer.interventions.length !== 0) {
+            // console.log("renderTableHeader customer is:", customer);
+            // console.log("renderTableHeader customer is:", customer[0]);
+            let header = Object.keys(customer.interventions[0]);
+            return header.map((key, index) => {
+                // console.log("Header key: ", key);
+                // const { id, status, result, building, battery, column, elevator } = key;
+                return <th key={index}>{key.toUpperCase()}</th>;
+            });
+        } else {
+            return <th></th>;
+        }
+    };
+
+    const renderTableData = () => {
+        return customer.interventions.map((customer, index) => {
+            const { id, status, result, building, battery, column, elevator } = customer;
+            return (
+                <tr key={id}>
+                    <td>{id}</td>
+                    <td>{status}</td>
+                    <td>{result}</td>
+                    <td>{building.id}</td>
+                    <td>{battery.id}</td>
+                    <td>{column != null ? column.id : "-"}</td>
+                    <td>{elevator != null ? elevator.id : "-"}</td>
+                </tr>
+            );
+        });
+    };
 
     return (
-        <table {...getTableProps()}>
-            <thead>
-                {headerGroups.map((headerGroup) => (
-                    <tr {...headerGroup.getHeaderGroupProps()}>
-                        {headerGroup.headers.map((column) => (
-                            <th {...column.getHeaderProps()}>{column.render("Header")}</th>
-                        ))}
+        <div>
+            <h1 id="title">Interventions</h1>
+            <table id="customer">
+                <thead>
+                    <tr>
+                        {customer.length !== 0 && customer.interventions.length !== 0 && renderTableHeader()}
                     </tr>
-                ))}
-            </thead>
-            <tbody {...getTableBodyProps()}>
-                {rows.map((row, i) => {
-                    prepareRow(row);
-                    return (
-                        <tr {...row.getRowProps()}>
-                            {row.cells.map((cell) => {
-                                return <td {...cell.getCellProps()}>{cell.render("Cell")}</td>;
-                            })}
-                        </tr>
-                    );
-                })}
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                    {customer.length !== 0 && customer.interventions.length !== 0 && renderTableData()}
+                </tbody>
+            </table>
+        </div>
     );
-
-    // return (
-    //     <div className="App">
-    //         <InterventionsTable columns={columns} data={data} />
-    //     </div>
-    // );
-}
+};
 
 export default Interventions;

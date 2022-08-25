@@ -1,43 +1,48 @@
 import { useNavigate } from "react-router-dom";
-import { useContext, useEffect, useState } from "react";
-import axios from "axios";
-import AuthContext from "../context/AuthProvider";
+// import { useEffect, useState } from "react";
+// import axios from "axios";
 import Interventions from "./Interventions";
 
-const requestOptions = {
-    headers: {
-        Authorization: localStorage.getItem("bearerToken"),
-    },
-};
+// const requestOptions = {
+//     headers: {
+//         Authorization: localStorage.getItem("bearerToken"),
+//     },
+// };
 
-const getInterventions = async (setInterventions) => {
-    try {
-        console.log("requestOptions:", requestOptions);
+// const getInterventions = async (setInterventions) => {
+//     try {
+//         // console.log("requestOptions:", requestOptions);
 
-        const res = await axios.get("/interventions", requestOptions);
-        console.log("[getInterventions] res is :", res);
+//         const res = await axios.get("/interventions", requestOptions);
+//         // console.log("[getInterventions] res is :", res);
 
-        setInterventions(res.data);
-    } catch (error) {
-        console.warn("[getInterventions] Error: ", error);
-    }
-};
+//         setInterventions(res.data);
+//     } catch (error) {
+//         console.warn("[getInterventions] Error: ", error);
+//     }
+// };
 
-const Home = () => {#
-    // const { setAuth } = useContext(AuthContext);
+const Home = () => {
     const navigate = useNavigate();
 
-    const [interventions, setInterventions] = useState([]);
+    // const [interventions, setInterventions] = useState([]);
 
-    useEffect(() => {
-        console.log("useEffect!");
-        getInterventions(setInterventions);
-    }, []);
+    // useEffect(() => {
+    //     console.log("useEffect!");
+    //     getInterventions(setInterventions);
+    // }, []);
 
-    // const logout = async () => {
-    //     setAuth({});
-    //     navigate("/");
-    // };
+    const interventionRequest = async () => {
+        navigate("/InterventionRequest");
+        console.log("Intervention Request!");
+    };
+
+    const logout = async () => {
+        localStorage.clear();
+        navigate("/");
+        console.log("logout!");
+        console.log(localStorage.getItem("bearerToken"));
+    };
 
     // const InterventionRequest = async () => {
     //     navigate("/InterventionRequest", { replace: true });
@@ -47,15 +52,14 @@ const Home = () => {#
         <section>
             <h1>Home Page</h1>
             <br />
-            <p>The interventions will be displayed here.</p>
+            <p>Your interventions are listed in the table below.</p>
             <br />
-            {/* <Interventions /> */}
+            <Interventions />
             <br />
-            {/* {interventions.length != 0 && } */}
 
-            {/* <div className="d-grid gap-2 mt-3">
-                <button ref={InterventionRequest} className="btn btn-primary">
-                    Intervention Request
+            <div className="d-grid gap-2 mt-3">
+                <button onClick={interventionRequest} className="btn btn-primary">
+                    New Intervention Request
                 </button>
             </div>
             <br />
@@ -63,7 +67,7 @@ const Home = () => {#
                 <button onClick={logout} className="btn btn-primary">
                     Log out
                 </button>
-            </div> */}
+            </div>
         </section>
     );
 };
