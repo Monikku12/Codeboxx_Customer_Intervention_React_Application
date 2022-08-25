@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
-import Dropdown from "react-dropdown";
-import "react-dropdown/style.css";
+// import Dropdown from "react-dropdown";
+// import "react-dropdown/style.css";
 import mainLogo from "../images/logo.png";
 import { useState, useEffect } from "react";
 import axios from "axios";
