@@ -3,15 +3,25 @@ import mainLogo from "../images/logo.png";
 import { useState, useEffect } from "react";
 import axios from "axios";
 
-const requestOptions = {
+const requestHeader = {
     headers: {
         Authorization: localStorage.getItem("bearerToken"),
     },
 };
 
+const getCustomerID = async (setCustomer) => {
+    try {
+        const res = await axios.get("/customers/current", requestHeader);
+
+        setCustomer(res.data);
+    } catch (error) {
+        console.warn("[getCustomer] Error: ", error);
+    }
+};
+
 const getBuildingByCustomerID = async (setBuildings) => {
     try {
-        const res = await axios.get("/buildings", requestOptions);
+        const res = await axios.get("/buildings", requestHeader);
 
         setBuildings(res.data);
     } catch (error) {
@@ -21,7 +31,7 @@ const getBuildingByCustomerID = async (setBuildings) => {
 
 const getBatteriesByBuildingID = async (buildingID, setBatteries) => {
     try {
-        const res = await axios.get(`/buildings/${buildingID}/batteries`, requestOptions);
+        const res = await axios.get(`/buildings/${buildingID}/batteries`, requestHeader);
 
         setBatteries(res.data);
     } catch (error) {
@@ -31,7 +41,7 @@ const getBatteriesByBuildingID = async (buildingID, setBatteries) => {
 
 const getColumnsByBatteryID = async (batteryID, setColumns) => {
     try {
-        const res = await axios.get(`/batteries/${batteryID}/columns`, requestOptions);
+        const res = await axios.get(`/batteries/${batteryID}/columns`, requestHeader);
 
         setColumns(res.data);
     } catch (error) {
@@ -41,14 +51,14 @@ const getColumnsByBatteryID = async (batteryID, setColumns) => {
 
 const getElevatorsByColumnID = async (columnID, setElevators) => {
     try {
-        const res = await axios.get(`/columns/${columnID}/elevators`, requestOptions);
-        console.log("getElevatorsByColumnID res is:", res);
+        const res = await axios.get(`/columns/${columnID}/elevators`, requestHeader);
 
         setElevators(res.data);
     } catch (error) {
         console.warn("[getElevatorsByColumnID] Error: ", error);
     }
 };
+
 
 const InterventionRequest = () => {
     const navigate = useNavigate();
@@ -60,6 +70,8 @@ const InterventionRequest = () => {
         console.log(localStorage.getItem("bearerToken"));
     };
 
+    const [customer, setCustomer] = useState([]);
+
     const [buildingID, setBuildingID] = useState(0);
     const [batteryID, setBatteryID] = useState(0);
     const [columnID, setColumnID] = useState(0);
@@ -70,6 +82,12 @@ const InterventionRequest = () => {
     const [columns, setColumns] = useState([]);
     const [elevators, setElevators] = useState([]);
     const [report, setReport] = useState([]);
+
+    let customerID = customer.id;
+
+    useEffect(() => {
+        getCustomerID(setCustomer);
+    }, []);
 
     useEffect(() => {
         getBuildingByCustomerID(setBuildings);
@@ -88,56 +106,79 @@ const InterventionRequest = () => {
     }, [batteryID]);
 
     useEffect(() => {
-        if (batteryID !== 0) {
-            console.log("useEffect! Get Elevators");
+        if (columnID !== 0) {
             getElevatorsByColumnID(columnID, setElevators);
         }
     }, [columnID]);
-
+    
     const handleBuildingChange = (e) => {
         setBuildingID(e.target.value);
     };
-
+    
     const handleBatteryChange = (e) => {
         setBatteryID(e.target.value);
     };
-
+    
     const handleColumnChange = (e) => {
         setColumnID(e.target.value);
     };
-
+    
     const handleElevatorChange = (e) => {
         setElevatorID(e.target.value);
-        // console.log("handleElevatorChange is : ", e.target.value);
+        console.log("handleElevatorChange is : ", e.target.value);
     };
 
     const handleReportChange = (e) => {
         setReport(e.target.value);
-        // console.log("handleReportChange is : ", e.target.value);
+        console.log("handleReportChange is : ", e.target.value);
     };
 
-    // const postRequest = async (setRequest) => {
-    //     try {
-    //         const res = await axios.post(POST_REQUEST_URL, requestOptions);
-    //         console.log("[getRequest] res is :", res);
+    const [message, setMessage] = useState(null);
 
-    //         setRequest(res.data);
-    //     } catch (error) {
-    //         console.warn("[getRequest] Error: ", error);
-    //     }
-    // };
+    // {
+    //     message && <label className="label">{message}</label>;
+    // }
+
+    let handleSubmit = async (e) => {
+        e.preventDefault();
+        try {
+            const res = await axios.post(
+                "/interventions/new",
+                {
+                    customerID: customerID,
+                    buildingID: buildingID,
+                    batteryID: batteryID,
+                    columnID: columnID,
+                    elevatorID: elevatorID,
+                    report: report,
+                },
+                requestHeader
+            );
+            console.log("[handleSubmit] res is :", res);
+            if (res.status === 200) {
+                setMessage("Your request was sent successfully.");
+                // <alert>Your request was sent successfully.</alert>
+            } else {
+                // <alert>Oops! Something is not right.</alert>;
+                setMessage("Oops! Something is not right.");
+            }
+        } catch (error) {
+            console.warn("[getRequest] Error: ", error);
+        }
+    };
 
     return (
         <section>
             <div className="Auth-form-container">
-                {/* <form className="Auth-form" onSubmit={handleSubmit}> */}
-                <form className="Auth-form">
+                <form className="Auth-form" onSubmit={handleSubmit}>
                     <img className="mainLogo" src={mainLogo} alt="Rocket Elevators Logo"></img>
                     <h3 className="Auth-form-title">Intervention Request</h3>
+                    <p>Fields with * are required.</p>
                     <div className="Auth-form-content">
+                        { message && <label className="label">{message}</label> }
                         <div className="form-group mt-3">
-                            <label>Building</label>
-                            <select onChange={handleBuildingChange}>
+                            <label>Building *</label>
+                            <select required onChange={handleBuildingChange}>
                                 <option value="Select a building"> -- Select a building -- </option>
                                 {buildings.length !== 0 &&
                                     buildings.map((building) => (
@@ -148,9 +189,9 @@ const InterventionRequest = () => {
                             </select>
                         </div>
                         <div className="form-group mt-3">
-                            <label>Battery</label>
+                            <label>Battery *</label>
                             <select onChange={handleBatteryChange}>
-                                <option value="Select a battery"> -- Select a battery -- </option>
+                                <option required value="Select a battery"> -- Select a battery -- </option>
                                 {batteries.length !== 0 &&
                                     batteries.map((battery) => (
                                         <option key={battery.id} value={battery.id}>
@@ -184,7 +225,7 @@ const InterventionRequest = () => {
                             </select>
                         </div>
                         <div className="form-group mt-3">
-                            <label>Report</label>
+                            <label>Report *</label>
                             <input
                                 type="text_area_tag"
                                 id="report"
@@ -194,17 +235,18 @@ const InterventionRequest = () => {
                                 onChange={handleReportChange}
                             />
                         </div>
-
-                        {/* <div className="d-grid gap-2 mt-3">
-                            <button className="btn btn-primary">Submit</button>
-                        </div> */}
+                        <div className="d-grid gap-2 mt-3">
+                            <button type="submit" className="btn btn-primary">
+                                Submit
+                            </button>
+                        </div>
+                        <div className="d-grid gap-2 mt-3">
+                            <button onClick={logout} className="btn btn-primary">
+                                Log out
+                            </button>
+                        </div>
                     </div>
                 </form>
-            </div>
-            <div className="d-grid gap-2 mt-3">
-                <button onClick={logout} className="btn btn-primary">
-                    Log out
-                </button>
             </div>
         </section>
     );
