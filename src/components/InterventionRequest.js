@@ -40,10 +40,9 @@ const getColumnsByBatteryID = async (batteryID, setColumns) => {
 };
 
 const getElevatorsByColumnID = async (columnID, setElevators) => {
-    // console.log("getElevatorsByColumnID columnID is:", columnID);
     try {
         const res = await axios.get(`/columns/${columnID}/elevators`, requestOptions);
-        // console.log("getElevatorsByColumnID res is:", res);
+        console.log("getElevatorsByColumnID res is:", res);
 
         setElevators(res.data);
     } catch (error) {
@@ -60,15 +59,17 @@ const InterventionRequest = () => {
         console.log("logout!");
         console.log(localStorage.getItem("bearerToken"));
     };
+
     const [buildingID, setBuildingID] = useState(0);
     const [batteryID, setBatteryID] = useState(0);
     const [columnID, setColumnID] = useState(0);
-    const [elevatorID, setlevatorID] = useState(0);
+    const [elevatorID, setElevatorID] = useState(0);
 
     const [buildings, setBuildings] = useState([]);
     const [batteries, setBatteries] = useState([]);
     const [columns, setColumns] = useState([]);
     const [elevators, setElevators] = useState([]);
+    const [report, setReport] = useState([]);
 
     useEffect(() => {
         getBuildingByCustomerID(setBuildings);
@@ -82,15 +83,16 @@ const InterventionRequest = () => {
 
     useEffect(() => {
         if (batteryID !== 0) {
-            console.log("useEffect! BatteryID is:", batteryID);
-            // getColumnsByBatteryID(batteryID, setColumns);
+            getColumnsByBatteryID(batteryID, setColumns);
         }
     }, [batteryID]);
 
-    // useEffect(() => {
-    //     console.log("useEffect! Get Elevators");
-    //     getElevatorsByColumnID(columnID, setElevators);
-    // }, [columnID]);
+    useEffect(() => {
+        if (batteryID !== 0) {
+            console.log("useEffect! Get Elevators");
+            getElevatorsByColumnID(columnID, setElevators);
+        }
+    }, [columnID]);
 
     const handleBuildingChange = (e) => {
         setBuildingID(e.target.value);
@@ -100,15 +102,37 @@ const InterventionRequest = () => {
         setBatteryID(e.target.value);
     };
 
+    const handleColumnChange = (e) => {
+        setColumnID(e.target.value);
+    };
+
+    const handleElevatorChange = (e) => {
+        setElevatorID(e.target.value);
+        // console.log("handleElevatorChange is : ", e.target.value);
+    };
+
+    const handleReportChange = (e) => {
+        setReport(e.target.value);
+        // console.log("handleReportChange is : ", e.target.value);
+    };
+
+    // const postRequest = async (setRequest) => {
+    //     try {
+    //         const res = await axios.post(POST_REQUEST_URL, requestOptions);
+    //         console.log("[getRequest] res is :", res);
+
+    //         setRequest(res.data);
+    //     } catch (error) {
+    //         console.warn("[getRequest] Error: ", error);
+    //     }
+    // };
+
     return (
         <section>
             <div className="Auth-form-container">
                 {/* <form className="Auth-form" onSubmit={handleSubmit}> */}
                 <form className="Auth-form">
                     <img className="mainLogo" src={mainLogo} alt="Rocket Elevators Logo"></img>
-                    {/* <p ref={errRef} className={errMsg ? "errmsg" : "offscreen"} aria-live="assertive">
-                        {errMsg}
-                    </p> */}
                     <h3 className="Auth-form-title">Intervention Request</h3>
                     <div className="Auth-form-content">
                         <div className="form-group mt-3">
@@ -137,20 +161,38 @@ const InterventionRequest = () => {
                         </div>
                         <div className="form-group mt-3">
                             <label>Column</label>
+                            <select onChange={handleColumnChange}>
+                                <option value="Select a column"> -- Select a column -- </option>
+                                {columns.length !== 0 &&
+                                    columns.map((column) => (
+                                        <option key={column.id} value={column.id}>
+                                            {column.id}
+                                        </option>
+                                    ))}
+                            </select>
                         </div>
                         <div className="form-group mt-3">
                             <label>Elevator</label>
+                            <select onChange={handleElevatorChange}>
+                                <option value="Select an elevator"> -- Select an elevator -- </option>
+                                {elevators.length !== 0 &&
+                                    elevators.map((elevator) => (
+                                        <option key={elevator.id} value={elevator.id}>
+                                            {elevator.id}
+                                        </option>
+                                    ))}
+                            </select>
                         </div>
                         <div className="form-group mt-3">
                             <label>Report</label>
-                            {/* <input
+                            <input
                                 type="text_area_tag"
                                 id="report"
                                 required
                                 className="form-control mt-1"
                                 placeholder="Explain the problem here."
                                 onChange={handleReportChange}
-                            /> */}
+                            />
                         </div>
 
                         {/* <div className="d-grid gap-2 mt-3">
