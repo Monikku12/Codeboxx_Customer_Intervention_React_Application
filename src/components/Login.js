@@ -13,11 +13,10 @@ const Login = () => {
     console.log("password is: ", password);
 
     const handleSubmit = async (e) => {
-        // e.preventDefault();
+        e.preventDefault();
         try {
-            const res = await axios.post(`/authenticate?email=${email}&password=password123`);
+            const res = await axios.post(`/authenticate?email=${email}&password=${password}`);
             const token = `Bearer ${res.data.access_token}`;
-
 
             localStorage.setItem("bearerToken", token);
 
@@ -32,37 +31,38 @@ const Login = () => {
     return (
         <section>
             <div className="Auth-form-container">
-                <form className="Auth-form">
-                <img className="mainLogo" src={mainLogo} alt="Rocket Elevators Logo"></img>
-                <h3 className="Auth-form-title">Sign In</h3>
-                <div className="Auth-form-content">
-                    <div className="form-group mt-3">
-                        <label htmlFor="email">Email address</label>
-                        <input
-                            type="email"
-                            autoComplete="off"
-                            onChange={(e) => setEmail(e.target.value)}
-                            required
-                            className="form-control mt-1"
-                            placeholder="Enter email"
-                        />
+                <form className="Auth-form" onSubmit={handleSubmit}>
+                    <img className="mainLogo" src={mainLogo} alt="Rocket Elevators Logo"></img>
+                    <h3 className="Auth-form-title">Sign In</h3>
+                    <div className="Auth-form-content">
+                        <div className="form-group mt-3">
+                            <label htmlFor="email">Email address</label>
+                            <input
+                                type="email"
+                                autoComplete="off"
+                                onChange={(e) => setEmail(e.target.value)}
+                                required
+                                className="form-control mt-1"
+                                placeholder="Enter email"
+                            />
+                        </div>
+                        <div className="form-group mt-3">
+                            <label htmlFor="password">Password</label>
+                            <input
+                                type="password"
+                                autoComplete="off"
+                                onChange={(e) => setPassword(e.target.value)}
+                                required
+                                className="form-control mt-1"
+                                placeholder="Enter password"
+                            />
+                        </div>
+                        <div className="d-grid gap-2 mt-3">
+                            <button type="submit" className="btn btn-primary">
+                                Submit
+                            </button>
+                        </div>
                     </div>
-                    <div className="form-group mt-3">
-                        <label htmlFor="password">Password</label>
-                        <input
-                            type="password"
-                            onChange={(e) => setPassword(e.target.value)}
-                            required
-                            className="form-control mt-1"
-                            placeholder="Enter password"
-                        />
-                    </div>
-                    <div className="d-grid gap-2 mt-3">
-                        <button className="btn btn-primary" onClick={() => handleSubmit(email, password, navigate)}>
-                            Sign in
-                        </button>
-                    </div>
-                </div>
                 </form>
             </div>
         </section>
