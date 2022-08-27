@@ -4,28 +4,30 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import mainLogo from "../images/logo.png";
 
-const handleSubmit = async (email, password, navigate) => {
-    try {
-        // const res = await axios.post("/authenticate?email=customer1@business.com&password=password123");
-        const res = await axios.post(`/authenticate?email=${email}&password=${password}`);
-        // const res = await axios.post("/authenticate", { email: email, password: password });
-        const token = `Bearer ${res.data.access_token}`;
-
-        localStorage.setItem("bearerToken", token);
-        console.log(res.data);
-        if (res.status === 200) {
-            navigate("/Home", { replace: true });
-        }
-    } catch (error) {
-        console.warn("[handleSubmit] Error: ", error);
-    }
-};
-
 const Login = () => {
     const navigate = useNavigate();
 
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    console.log("email is: ", email);
+    console.log("password is: ", password);
+
+    const handleSubmit = async (e) => {
+        // e.preventDefault();
+        try {
+            const res = await axios.post(`/authenticate?email=${email}&password=password123`);
+            const token = `Bearer ${res.data.access_token}`;
+
+
+            localStorage.setItem("bearerToken", token);
+
+            if (res.status === 200) {
+                navigate("/Home", { replace: true });
+            }
+        } catch (error) {
+            console.warn("[handleSubmit] Error: ", error);
+        }
+    };
 
     return (
         <section>
@@ -35,7 +37,7 @@ const Login = () => {
                 <h3 className="Auth-form-title">Sign In</h3>
                 <div className="Auth-form-content">
                     <div className="form-group mt-3">
-                        <label htmlFor="user">Email address</label>
+                        <label htmlFor="email">Email address</label>
                         <input
                             type="email"
                             autoComplete="off"

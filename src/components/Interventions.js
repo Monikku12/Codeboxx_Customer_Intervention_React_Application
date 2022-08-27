@@ -29,9 +29,10 @@ const Interventions = () => {
         getCustomer(setCustomer);
     }, []);
 
+
     const renderTableHeader = () => {
         if (customer.length !== 0 && customer.interventions.length !== 0) {
-            // console.log("renderTableHeader customer is:", customer);
+            console.log("renderTableHeader customer is:", customer.interventions);
             // console.log("renderTableHeader customer is:", customer[0]);
             let header = Object.keys(customer.interventions[0]);
             return header.map((key, index) => {
@@ -52,8 +53,8 @@ const Interventions = () => {
                     <td>{id}</td>
                     <td>{status}</td>
                     <td>{result}</td>
-                    <td>{building.id}</td>
-                    <td>{battery.id}</td>
+                    <td>{building != null ? building.id : "-"}</td>
+                    <td>{battery != null ? battery.id : "-"}</td>
                     <td>{column != null ? column.id : "-"}</td>
                     <td>{elevator != null ? elevator.id : "-"}</td>
                 </tr>

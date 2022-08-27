@@ -156,10 +156,8 @@ const InterventionRequest = () => {
             );
             console.log("[handleSubmit] res is :", res);
             if (res.status === 200) {
-                setMessage("Your request was sent successfully.");
-                // <alert>Your request was sent successfully.</alert>
+                setMessage("Your request was sent successfully.").then (navigate("/Home", { replace: true }));
             } else {
-                // <alert>Oops! Something is not right.</alert>;
                 setMessage("Oops! Something is not right.");
             }
         } catch (error) {
