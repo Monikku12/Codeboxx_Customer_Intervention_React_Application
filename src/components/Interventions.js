@@ -32,8 +32,9 @@ const Interventions = () => {
 
     const renderTableHeader = () => {
         if (customer.length !== 0 && customer.interventions.length !== 0) {
-            console.log("renderTableHeader customer is:", customer.interventions);
+            console.log("renderTableHeader customer is:", customer.interventions[0]);
             // console.log("renderTableHeader customer is:", customer[0]);
+            // let header = Object.keys(customer.interventions[0]);
             let header = Object.keys(customer.interventions[0]);
             return header.map((key, index) => {
                 // console.log("Header key: ", key);
