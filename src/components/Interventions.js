@@ -3,7 +3,7 @@ import axios from "axios";
 
 const GET_COSTUMER_URL = "/customers/current";
 
-const requestOptions = {
+const requestHeader = {
     headers: {
         Authorization: localStorage.getItem("bearerToken"),
     },
@@ -11,7 +11,7 @@ const requestOptions = {
 
 const getCustomer = async (setCustomer) => {
     try {
-        const res = await axios.get(GET_COSTUMER_URL, requestOptions);
+        const res = await axios.get(GET_COSTUMER_URL, requestHeader);
         // console.log("[getCustomer] res is :", res);
 
         setCustomer(res.data);
@@ -21,13 +21,13 @@ const getCustomer = async (setCustomer) => {
 };
 
 const Interventions = () => {
+    const [customer, setCustomer] = useState([]);
+    // console.log("customer: ", customer);
+
     useEffect(() => {
         // console.log("useEffect! Get data.");
         getCustomer(setCustomer);
     }, []);
-
-    const [customer, setCustomer] = useState([]);
-    // console.log("customer: ", customer);
 
     const renderTableHeader = () => {
         if (customer.length !== 0 && customer.interventions.length !== 0) {
