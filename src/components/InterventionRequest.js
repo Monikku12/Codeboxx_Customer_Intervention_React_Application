@@ -15,7 +15,7 @@ const getCustomerID = async (setCustomer) => {
 
         setCustomer(res.data);
     } catch (error) {
-        console.warn("[getCustomer] Error: ", error);
+        console.warn("[getCustomerID] Error: ", error);
     }
 };
 
@@ -67,23 +67,23 @@ const InterventionRequest = () => {
         localStorage.clear();
         navigate("/");
         console.log("logout!");
-        console.log(localStorage.getItem("bearerToken"));
     };
 
     const [customer, setCustomer] = useState([]);
-
-    const [buildingID, setBuildingID] = useState(0);
-    const [batteryID, setBatteryID] = useState(0);
-    const [columnID, setColumnID] = useState(0);
-    const [elevatorID, setElevatorID] = useState(0);
-
+    
+    const [building, setBuildingID] = useState(0);
+    const [battery, setBatteryID] = useState(0);
+    const [column, setColumnID] = useState(0);
+    const [elevator, setElevatorID] = useState(0);
+    
     const [buildings, setBuildings] = useState([]);
     const [batteries, setBatteries] = useState([]);
     const [columns, setColumns] = useState([]);
     const [elevators, setElevators] = useState([]);
     const [report, setReport] = useState([]);
 
-    let customerID = customer.id;
+    // let customerID = customer.id;
+    // let buildingID = building.id;
 
     useEffect(() => {
         getCustomerID(setCustomer);
@@ -91,53 +91,50 @@ const InterventionRequest = () => {
 
     useEffect(() => {
         getBuildingByCustomerID(setBuildings);
+        // building.id = handleBuildingChange(e.target.value);
+
     }, []);
 
     useEffect(() => {
-        if (buildingID !== 0) {
-            getBatteriesByBuildingID(buildingID, setBatteries);
+        if (building !== 0) {
+            getBatteriesByBuildingID(building, setBatteries);
         }
-    }, [buildingID]);
+    }, [building]);
 
     useEffect(() => {
-        if (batteryID !== 0) {
-            getColumnsByBatteryID(batteryID, setColumns);
+        if (battery !== 0) {
+            getColumnsByBatteryID(battery, setColumns);
         }
-    }, [batteryID]);
+    }, [battery]);
 
     useEffect(() => {
-        if (columnID !== 0) {
-            getElevatorsByColumnID(columnID, setElevators);
+        if (column !== 0) {
+            getElevatorsByColumnID(column, setElevators);
         }
-    }, [columnID]);
-    
-    const handleBuildingChange = (e) => {
-        setBuildingID(e.target.value);
+    }, [column]);
+
+    const handleBuildingChange = (building) => {
+        setBuildingID(building.target.value);
     };
-    
+
     const handleBatteryChange = (e) => {
         setBatteryID(e.target.value);
     };
-    
+
     const handleColumnChange = (e) => {
         setColumnID(e.target.value);
     };
-    
+
     const handleElevatorChange = (e) => {
         setElevatorID(e.target.value);
-        console.log("handleElevatorChange is : ", e.target.value);
+        // console.log("handleElevatorChange is : ", e.target.value);
     };
 
     const handleReportChange = (e) => {
         setReport(e.target.value);
-        console.log("handleReportChange is : ", e.target.value);
     };
 
     const [message, setMessage] = useState(null);
-
-    // {
-    //     message && <label className="label">{message}</label>;
-    // }
 
     let handleSubmit = async (e) => {
         e.preventDefault();
@@ -145,18 +142,19 @@ const InterventionRequest = () => {
             const res = await axios.post(
                 "/interventions/new",
                 {
-                    customerID: customerID,
-                    buildingID: buildingID,
-                    batteryID: batteryID,
-                    columnID: columnID,
-                    elevatorID: elevatorID,
+                    customerID: customer.id,
+                    buildingID: building.id,
+                    batteryID: battery.id,
+                    columnID: column.id,
+                    elevatorID: elevator.id,
                     report: report,
                 },
                 requestHeader
             );
             console.log("[handleSubmit] res is :", res);
             if (res.status === 200) {
-                setMessage("Your request was sent successfully.").then (navigate("/Home", { replace: true }));
+                setMessage("Your request was sent successfully.")
+                navigate("/Home", { replace: true });
             } else {
                 setMessage("Oops! Something is not right.");
             }
@@ -179,7 +177,7 @@ const InterventionRequest = () => {
                             <select required onChange={handleBuildingChange}>
                                 <option value="Select a building"> -- Select a building -- </option>
                                 {buildings.length !== 0 &&
-                                    buildings.map((building) => (
+                                    buildings.map(building => (
                                         <option key={building.id} value={building.id}>
                                             {building.id}
                                         </option>
