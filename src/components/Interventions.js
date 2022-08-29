@@ -30,21 +30,21 @@ const Interventions = () => {
     }, []);
 
 
-    const renderTableHeader = () => {
-        if (customer.length !== 0 && customer.interventions.length !== 0) {
-            // console.log("renderTableHeader customer is:", customer.interventions[0]);
-            // console.log("renderTableHeader customer is:", customer[0]);
-            // let header = Object.keys(customer.interventions[0]);
-            let header = Object.keys(customer.interventions[0]);
-            return header.map((key, index) => {
-                // console.log("Header key: ", key);
-                // const { id, status, result, building, battery, column, elevator } = key;
-                return <th key={index}>{key.toUpperCase()}</th>;
-            });
-        } else {
-            return <th></th>;
-        }
-    };
+    // const renderTableHeader = () => {
+    //     if (customer.length !== 0 && customer.interventions.length !== 0) {
+    //         // console.log("renderTableHeader customer is:", customer.interventions[0]);
+    //         // console.log("renderTableHeader customer is:", customer[0]);
+    //         // let header = Object.keys(customer.interventions[0]);
+    //         let header = Object.keys(customer.interventions[0]);
+    //         return header.map((key, index) => {
+    //             // console.log("Header key: ", key);
+    //             // const { id, status, result, building, battery, column, elevator } = key;
+    //             return <th key={index}>{key.toUpperCase()}</th>;
+    //         });
+    //     } else {
+    //         return <th></th>;
+    //     }
+    // };
 
     const renderTableData = () => {
         return customer.interventions.map((customer, index) => {
@@ -69,7 +69,14 @@ const Interventions = () => {
             <table id="customer">
                 <thead>
                     <tr>
-                        {customer.length !== 0 && customer.interventions.length !== 0 && renderTableHeader()}
+                        {/* {customer.length !== 0 && customer.interventions.length !== 0 && renderTableHeader()} */}
+                        <th>ID</th>
+                        <th>Status</th>
+                        <th>Result</th>
+                        <th>Building</th>
+                        <th>Battery</th>
+                        <th>Column</th>
+                        <th>Elevator</th>
                     </tr>
                 </thead>
                 <tbody>
