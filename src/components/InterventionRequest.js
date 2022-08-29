@@ -11,7 +11,7 @@ const requestHeader = {
 
 const getCustomerID = async (setCustomer) => {
     try {
-        const res = await axios.get("/customers/current", requestHeader);
+        const res = await axios.get("https://java-api.codeboxxtest.xyz/customers/current", requestHeader);
 
         setCustomer(res.data);
     } catch (error) {
@@ -21,7 +21,7 @@ const getCustomerID = async (setCustomer) => {
 
 const getBuildingByCustomerID = async (setBuildings) => {
     try {
-        const res = await axios.get("/buildings", requestHeader);
+        const res = await axios.get("https://java-api.codeboxxtest.xyz/buildings", requestHeader);
 
         setBuildings(res.data);
     } catch (error) {
@@ -31,7 +31,7 @@ const getBuildingByCustomerID = async (setBuildings) => {
 
 const getBatteriesByBuildingID = async (buildingID, setBatteries) => {
     try {
-        const res = await axios.get(`/buildings/${buildingID}/batteries`, requestHeader);
+        const res = await axios.get(`https://java-api.codeboxxtest.xyz/buildings/${buildingID}/batteries`, requestHeader);
 
         setBatteries(res.data);
     } catch (error) {
@@ -41,7 +41,7 @@ const getBatteriesByBuildingID = async (buildingID, setBatteries) => {
 
 const getColumnsByBatteryID = async (batteryID, setColumns) => {
     try {
-        const res = await axios.get(`/batteries/${batteryID}/columns`, requestHeader);
+        const res = await axios.get(`https://java-api.codeboxxtest.xyz/batteries/${batteryID}/columns`, requestHeader);
 
         setColumns(res.data);
     } catch (error) {
@@ -51,7 +51,7 @@ const getColumnsByBatteryID = async (batteryID, setColumns) => {
 
 const getElevatorsByColumnID = async (columnID, setElevators) => {
     try {
-        const res = await axios.get(`/columns/${columnID}/elevators`, requestHeader);
+        const res = await axios.get(`https://java-api.codeboxxtest.xyz/columns/${columnID}/elevators`, requestHeader);
 
         setElevators(res.data);
     } catch (error) {
@@ -132,8 +132,7 @@ const InterventionRequest = () => {
     let handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const res = await axios.post(
-                "/interventions/new",
+            const res = await axios.post("https://java-api.codeboxxtest.xyz/interventions/new",
                 {
                     customerID: customer.id,
                     buildingID: building,

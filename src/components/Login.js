@@ -13,7 +13,7 @@ const Login = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const res = await axios.post(`/authenticate?email=${email}&password=${password}`);
+            const res = await axios.post(`https://java-api.codeboxxtest.xyz/authenticate?email=${email}&password=${password}`);
             const token = `Bearer ${res.data.access_token}`;
 
             localStorage.setItem("bearerToken", token);

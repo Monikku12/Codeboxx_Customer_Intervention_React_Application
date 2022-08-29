@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 
-const GET_COSTUMER_URL = "/customers/current";
+const GET_COSTUMER_URL = "https://java-api.codeboxxtest.xyz/customers/current";
 
 const requestHeader = {
     headers: {
