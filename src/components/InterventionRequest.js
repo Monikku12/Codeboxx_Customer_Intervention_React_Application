@@ -66,64 +66,51 @@ const InterventionRequest = () => {
     const logout = async () => {
         localStorage.clear();
         navigate("/");
-        console.log("logout!");
     };
 
     const [customer, setCustomer] = useState([]);
-    // const [buildingID, setBuilding] = useState(0);
     
     const [building, setBuildingID] = useState(0);
     const [battery, setBatteryID] = useState(0);
     const [column, setColumnID] = useState(0);
     const [elevator, setElevatorID] = useState(0);
-    
+
     const [buildings, setBuildings] = useState([]);
     const [batteries, setBatteries] = useState([]);
     const [columns, setColumns] = useState([]);
     const [elevators, setElevators] = useState([]);
     const [report, setReport] = useState([]);
 
-    // let customerID = customer.id;
-    // // let buildingID = building.id;
-    // console.log("building is:", building);
-    // console.log("buildingID is:", buildingID);
-
-
-    
     useEffect(() => {
         getCustomerID(setCustomer);
     }, []);
 
     useEffect(() => {
         getBuildingByCustomerID(setBuildings);
-        // building.id = handleBuildingChange(e.target.value);
-
     }, []);
 
     useEffect(() => {
         if (building !== 0) {
             getBatteriesByBuildingID(building, setBatteries);
-            // console.log("getBatteriesByBuildingID is:", building);
         }
     }, [building]);
-    
+
     useEffect(() => {
         if (battery !== 0) {
             getColumnsByBatteryID(battery, setColumns);
         }
     }, [battery]);
-    
+
     useEffect(() => {
         if (column !== 0) {
             getElevatorsByColumnID(column, setElevators);
         }
     }, [column]);
-    
+
     const handleBuildingIDChange = (e) => {
         setBuildingID(e.target.value);
-        // console.log("handleBuildingIDChange is :", e.target);
     };
-    
+
     const handleBatteryChange = (e) => {
         setBatteryID(e.target.value);
     };
@@ -157,7 +144,6 @@ const InterventionRequest = () => {
                 },
                 requestHeader
             );
-            console.log("[handleSubmit] res is :", res);
             if (res.status === 200) {
                 setMessage("Your request was sent successfully.")
                 navigate("/Home", { replace: true });

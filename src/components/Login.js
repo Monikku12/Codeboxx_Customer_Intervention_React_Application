@@ -13,8 +13,7 @@ const Login = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const res = await axios.post(`/authenticate?email=customer1%40business.com&password=password123`);
-            // const res = await axios.post(`/authenticate?email=${email}&password=${password}`);
+            const res = await axios.post(`/authenticate?email=${email}&password=${password}`);
             const token = `Bearer ${res.data.access_token}`;
 
             localStorage.setItem("bearerToken", token);
