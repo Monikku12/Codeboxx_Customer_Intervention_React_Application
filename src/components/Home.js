@@ -24,7 +24,6 @@ const Home = () => {
             <br />
             <Interventions />
             <br />
-
             <div className="d-grid gap-2 mt-3">
                 <button onClick={interventionRequest} className="btn btn-primary">
                     New Intervention Request
