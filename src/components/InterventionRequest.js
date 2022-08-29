@@ -66,9 +66,11 @@ const InterventionRequest = () => {
     const logout = async () => {
         localStorage.clear();
         navigate("/");
+        console.log("logout!");
     };
 
     const [customer, setCustomer] = useState([]);
+    // const [buildingID, setBuilding] = useState(0);
     
     const [building, setBuildingID] = useState(0);
     const [battery, setBatteryID] = useState(0);
@@ -82,44 +84,46 @@ const InterventionRequest = () => {
     const [report, setReport] = useState([]);
 
     // let customerID = customer.id;
-    // let buildingID = building.id;
+    // // let buildingID = building.id;
+    // console.log("building is:", building);
+    // console.log("buildingID is:", buildingID);
+
+
     
     useEffect(() => {
         getCustomerID(setCustomer);
     }, []);
-    
+
     useEffect(() => {
         getBuildingByCustomerID(setBuildings);
         // building.id = handleBuildingChange(e.target.value);
-        
+
     }, []);
-    
+
     useEffect(() => {
         if (building !== 0) {
-            getBatteriesByBuildingID(building.id, setBatteries);
-            let buildingID = building.id;
-            // console.log("buildingID: ", buildingID);
-            // console.log("building.id is: ", building);
+            getBatteriesByBuildingID(building, setBatteries);
+            // console.log("getBatteriesByBuildingID is:", building);
         }
     }, [building]);
-
+    
     useEffect(() => {
         if (battery !== 0) {
             getColumnsByBatteryID(battery, setColumns);
         }
     }, [battery]);
-
+    
     useEffect(() => {
         if (column !== 0) {
             getElevatorsByColumnID(column, setElevators);
         }
     }, [column]);
-
-    const handleBuildingChange = (e) => {
+    
+    const handleBuildingIDChange = (e) => {
         setBuildingID(e.target.value);
-        // console.log("handleBuildingChange setBuildingID is :", setBuildingID);
+        // console.log("handleBuildingIDChange is :", e.target);
     };
-
+    
     const handleBatteryChange = (e) => {
         setBatteryID(e.target.value);
     };
@@ -130,7 +134,6 @@ const InterventionRequest = () => {
 
     const handleElevatorChange = (e) => {
         setElevatorID(e.target.value);
-        // console.log("handleElevatorChange is : ", e.target.value);
     };
 
     const handleReportChange = (e) => {
@@ -146,7 +149,7 @@ const InterventionRequest = () => {
                 "/interventions/new",
                 {
                     customerID: customer.id,
-                    buildingID: building.id,
+                    buildingID: building,
                     batteryID: battery,
                     columnID: column,
                     elevatorID: elevator,
@@ -154,7 +157,7 @@ const InterventionRequest = () => {
                 },
                 requestHeader
             );
-            // console.log("[handleSubmit] res is :", res);
+            console.log("[handleSubmit] res is :", res);
             if (res.status === 200) {
                 setMessage("Your request was sent successfully.")
                 navigate("/Home", { replace: true });
@@ -174,10 +177,10 @@ const InterventionRequest = () => {
                     <h3 className="Auth-form-title">Intervention Request</h3>
                     <p>Fields with * are required.</p>
                     <div className="Auth-form-content">
-                        { message && <label className="label">{message}</label> }
+                        {message && <label className="label">{message}</label>}
                         <div className="form-group mt-3">
                             <label>Building *</label>
-                            <select required onChange={handleBuildingChange}>
+                            <select required onChange={handleBuildingIDChange}>
                                 <option value="Select a building"> -- Select a building -- </option>
                                 {buildings.length !== 0 &&
                                     buildings.map((building) => (
