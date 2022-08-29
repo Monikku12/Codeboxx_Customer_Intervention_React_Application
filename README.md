@@ -1,23 +1,3 @@
-########## DELIVERABLE STATUS ##########
-
-Here is what I could do. The login page was done en entirely working. 
-
-The intervention table is set, but since I encountered many problems with the token, I couldn't retrieve the data from the API. And so I could never double check the results obtained.
-
-The Intervention Request form is started, but then again due to login problem, I lacked time to go further and I wouldn't be able to complete it without the token. 
-
-Token problem: Since there was no problem with the login, I continued my work with the Intervention Table. At first it appeared as a hook problem, then as a token value problem (string instead of JWT) and finally I was able to find that the token was extract from the login properly, but is lost as soon as it's passed in the setAuth variable.
-
-For unknown reasons, I'm also unable to deploy. I installed the Heroku, I installed the buildpack, I setup the buildpack in my Heroku settings and it still doesn't recognize anything. 
-Command passed: 
-$ heroku plugins:install buildpack-registry
-$ heroku plugins:install buildpacks
-$ heroku buildpacks:set https://github.com/facebook/react.git
-
-It's now Monday the 22nd 6:55 am Quebec time and I send my work as it is. 
-
-
-
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
