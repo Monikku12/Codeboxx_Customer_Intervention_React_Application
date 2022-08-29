@@ -6,14 +6,11 @@ const Home = () => {
 
     const interventionRequest = async () => {
         navigate("/InterventionRequest");
-        console.log("Intervention Request!");
     };
 
     const logout = async () => {
         localStorage.clear();
         navigate("/");
-        console.log("logout!");
-        console.log(localStorage.getItem("bearerToken"));
     };
 
     return (
