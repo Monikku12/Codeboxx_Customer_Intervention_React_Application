@@ -1,36 +1,8 @@
 import { useNavigate } from "react-router-dom";
-// import { useEffect, useState } from "react";
-// import axios from "axios";
 import Interventions from "./Interventions";
-
-// const requestOptions = {
-//     headers: {
-//         Authorization: localStorage.getItem("bearerToken"),
-//     },
-// };
-
-// const getInterventions = async (setInterventions) => {
-//     try {
-//         // console.log("requestOptions:", requestOptions);
-
-//         const res = await axios.get("/interventions", requestOptions);
-//         // console.log("[getInterventions] res is :", res);
-
-//         setInterventions(res.data);
-//     } catch (error) {
-//         console.warn("[getInterventions] Error: ", error);
-//     }
-// };
 
 const Home = () => {
     const navigate = useNavigate();
-
-    // const [interventions, setInterventions] = useState([]);
-
-    // useEffect(() => {
-    //     console.log("useEffect!");
-    //     getInterventions(setInterventions);
-    // }, []);
 
     const interventionRequest = async () => {
         navigate("/InterventionRequest");
@@ -43,10 +15,6 @@ const Home = () => {
         console.log("logout!");
         console.log(localStorage.getItem("bearerToken"));
     };
-
-    // const InterventionRequest = async () => {
-    //     navigate("/InterventionRequest", { replace: true });
-    // };
 
     return (
         <section>

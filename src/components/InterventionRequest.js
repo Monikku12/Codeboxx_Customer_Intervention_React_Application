@@ -66,7 +66,6 @@ const InterventionRequest = () => {
     const logout = async () => {
         localStorage.clear();
         navigate("/");
-        console.log("logout!");
     };
 
     const [customer, setCustomer] = useState([]);
@@ -84,20 +83,23 @@ const InterventionRequest = () => {
 
     // let customerID = customer.id;
     // let buildingID = building.id;
-
+    
     useEffect(() => {
         getCustomerID(setCustomer);
     }, []);
-
+    
     useEffect(() => {
         getBuildingByCustomerID(setBuildings);
         // building.id = handleBuildingChange(e.target.value);
-
+        
     }, []);
-
+    
     useEffect(() => {
         if (building !== 0) {
-            getBatteriesByBuildingID(building, setBatteries);
+            getBatteriesByBuildingID(building.id, setBatteries);
+            let buildingID = building.id;
+            // console.log("buildingID: ", buildingID);
+            // console.log("building.id is: ", building);
         }
     }, [building]);
 
@@ -113,8 +115,9 @@ const InterventionRequest = () => {
         }
     }, [column]);
 
-    const handleBuildingChange = (building) => {
-        setBuildingID(building.target.value);
+    const handleBuildingChange = (e) => {
+        setBuildingID(e.target.value);
+        // console.log("handleBuildingChange setBuildingID is :", setBuildingID);
     };
 
     const handleBatteryChange = (e) => {
@@ -144,14 +147,14 @@ const InterventionRequest = () => {
                 {
                     customerID: customer.id,
                     buildingID: building.id,
-                    batteryID: battery.id,
-                    columnID: column.id,
-                    elevatorID: elevator.id,
+                    batteryID: battery,
+                    columnID: column,
+                    elevatorID: elevator,
                     report: report,
                 },
                 requestHeader
             );
-            console.log("[handleSubmit] res is :", res);
+            // console.log("[handleSubmit] res is :", res);
             if (res.status === 200) {
                 setMessage("Your request was sent successfully.")
                 navigate("/Home", { replace: true });
@@ -177,7 +180,7 @@ const InterventionRequest = () => {
                             <select required onChange={handleBuildingChange}>
                                 <option value="Select a building"> -- Select a building -- </option>
                                 {buildings.length !== 0 &&
-                                    buildings.map(building => (
+                                    buildings.map((building) => (
                                         <option key={building.id} value={building.id}>
                                             {building.id}
                                         </option>
