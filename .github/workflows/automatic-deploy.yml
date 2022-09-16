@@ -15,6 +15,5 @@ jobs:
     runs-on: ubuntu-latest
     environment: production
     steps:
-      - name: deploy
       - run: echo "$HOME/Customer_Intervention_React_Application/build/*" >> $GITHUB_PATH
       - run: scp -r $GITHUB_PATH ubuntu@138.197.140.201:/var/www/mobile.monichan.com/html
