@@ -15,5 +15,10 @@ jobs:
     runs-on: ubuntu-latest
     environment: production
     steps:
+      - name: Write SSH keys
+        run: |
+          install -m 600 -D /dev/null ~/.ssh/id_rsa
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
+          ssh-keyscan -H host.mobile.monichan.com > ~/.ssh/known_hosts
       - run: echo "$HOME/Customer_Intervention_React_Application/build/*" >> $GITHUB_PATH
       - run: scp -r $GITHUB_PATH ubuntu@138.197.140.201:/var/www/mobile.monichan.com/html
