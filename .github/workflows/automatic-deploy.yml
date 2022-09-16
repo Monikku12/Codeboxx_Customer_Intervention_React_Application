@@ -26,7 +26,7 @@ jobs:
         run: ssh-keyscan -H ${{ secrets.SSH_HOST }} >> ~/.ssh/known_hosts
         
       - name: Build
-        run: npm run build
+        run: npm run build "$HOME/Customer_Intervention_React_Application"
         
       - name: Deploy          
         run: 
