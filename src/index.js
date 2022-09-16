@@ -18,10 +18,10 @@ Sentry.init({
   tracesSampleRate: 1.0,
 });
 
-ReactDOM.render(<App />, document.getElementById("root"));
+// ReactDOM.render(<App />, document.getElementById("root"));
 
 // Can also use with React Concurrent Mode
-// ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+ReactDOM.createRoot(document.getElementById('root')).render(<App />);
 
 if (process.env.NODE_ENV === "production") {
     disableReactDevTools();
