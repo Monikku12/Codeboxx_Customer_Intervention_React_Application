@@ -1,7 +1,9 @@
 name: learn-github-actions
-on: [push]
+on:
+  push:
+    branches: [ "main" ]
 jobs:
-  Deploy
+  deploy:
     runs-on: ubuntu-latest
     steps:
-      run: scp -r $HOME/./build/* ubuntu@138.197.140.201:/var/www/mobile.monichan.com/html
+      - run: scp -r $HOME/Customer_Intervention_React_Application/build/* ubuntu@138.197.140.201:/var/www/mobile.monichan.com/html
