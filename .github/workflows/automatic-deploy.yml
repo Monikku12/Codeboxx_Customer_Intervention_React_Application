@@ -19,7 +19,7 @@ jobs:
         run: |
           install -m 600 -D /dev/null ~/.ssh/id_rsa
           echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
-          host='host.Codeboxx-React-Expo'
+          host=HOST_NAME
           hosts="$(dig +short "$host" | grep -v '\.$' | sed -z 's|\n|,|g')$host"
           ssh-keyscan -H "$hosts" > ~/.ssh/known_hosts
       - run: echo "$HOME/Customer_Intervention_React_Application/build/*" >> $GITHUB_PATH
