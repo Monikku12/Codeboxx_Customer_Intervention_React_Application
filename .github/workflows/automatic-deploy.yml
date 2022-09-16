@@ -14,13 +14,18 @@ jobs:
   deployment:
     runs-on: ubuntu-latest
     environment: production
+    
     steps:
-      - name: Write SSH keys
-        run: |
-          install -m 600 -D /dev/null ~/.ssh/id_rsa
-          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
-          host=HOST_NAME
-          hosts="$(dig +short "$host" | grep -v '\.$' | sed -z 's|\n|,|g')$host"
-          ssh-keyscan -H "$hosts" > ~/.ssh/known_hosts
-      - run: echo "$HOME/Customer_Intervention_React_Application/build/*" >> $GITHUB_PATH
-      - run: scp -r $GITHUB_PATH ubuntu@138.197.140.201:/var/www/mobile.monichan.com/html
+      - name: Install SSH Key
+        uses: shimataro/ssh-key-action@v2
+        with:
+          key: ${{ secrets.DEPLOY_PRIVATE_KEY }} 
+          known_hosts: 'just-a-placeholder-so-we-dont-get-errors'
+          
+      - name: Adding Known Hosts
+        run: ssh-keyscan -H ${{ secrets.SSH_HOST }} >> ~/.ssh/known_hosts
+        
+      - name: Deploy          
+        run: 
+          echo "$HOME/Customer_Intervention_React_Application/build/*" >> $GITHUB_PATH
+          scp -r $GITHUB_PATH ubuntu@138.197.140.201:/var/www/mobile.monichan.com/html
