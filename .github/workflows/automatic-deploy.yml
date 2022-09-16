@@ -1,0 +1,7 @@
+name: learn-github-actions
+on: [push]
+jobs:
+  Deploy
+    runs-on: ubuntu-latest
+    steps:
+      run: scp -r $HOME/./build/* ubuntu@138.197.140.201:/var/www/mobile.monichan.com/html
