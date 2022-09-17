@@ -28,10 +28,6 @@ jobs:
       - name: Adding Known Hosts
         run: ssh-keyscan -H ${{ secrets.SSH_HOST }} >> ~/.ssh/known_hosts
         
-      - name: Build
-        run: npm run build
-        working-directory: "$HOME/Customer_Intervention_React_Application"
-        
       - name: Deploy with rsync
         run: 
           echo "./build/*" >> $GITHUB_PATH
