@@ -30,5 +30,4 @@ jobs:
         
       - name: Deploy with rsync
         run: 
-          echo "./build/*" >> $GITHUB_PATH
-          scp -r $GITHUB_PATH ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:/var/www/mobile.monichan.com/html
+          scp -r * ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:/var/www/mobile.monichan.com/html
