@@ -26,9 +26,8 @@ jobs:
         run: ssh-keyscan -H ${{ secrets.SSH_HOST }} >> ~/.ssh/known_hosts
         
       - name: Build
-        run: 
-          echo "$HOME/Customer_Intervention_React_Application" >> $GITHUB_PATH
-          npm run build $GITHUB_PATH
+        run: npm run build
+        working-directory: $HOME/Customer_Intervention_React_Application
         
       - name: Deploy          
         run: 
