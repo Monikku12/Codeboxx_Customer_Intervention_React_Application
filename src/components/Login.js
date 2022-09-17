@@ -32,6 +32,7 @@ const Login = () => {
                 <form className="Auth-form" onSubmit={handleSubmit}>
                     <img className="mainLogo" src={mainLogo} alt="Rocket Elevators Logo"></img>
                     <h3 className="Auth-form-title">Sign In</h3>
+                    <h3 className="Auth-form-title">This is a test</h3>
                     <div className="Auth-form-content">
                         <div className="form-group mt-3">
                             <label htmlFor="email">Email address</label>
