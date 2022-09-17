@@ -35,4 +35,4 @@ jobs:
         
       - name: Deploy
         run: 
-          scp -r * ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:/var/www/mobile.monichan.com/html
+          scp -r ./build/* ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:/var/www/mobile.monichan.com/html
