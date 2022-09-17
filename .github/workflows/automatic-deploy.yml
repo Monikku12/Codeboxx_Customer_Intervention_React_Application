@@ -16,6 +16,9 @@ jobs:
     environment: production
     
     steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+    
       - name: Install SSH Key
         uses: shimataro/ssh-key-action@v2
         with:
@@ -25,7 +28,9 @@ jobs:
       - name: Adding Known Hosts
         run: ssh-keyscan -H ${{ secrets.SSH_HOST }} >> ~/.ssh/known_hosts
         
-      - name: Deploy          
+      - name: Build
+        run: npm run build
+        
+      - name: Deploy
         run: 
-          echo "$HOME/Customer_Intervention_React_Application/build/*" >> $GITHUB_PATH
-          scp -r $GITHUB_PATH ubuntu@138.197.140.201:/var/www/mobile.monichan.com/html
+          scp -r * ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:/var/www/mobile.monichan.com/html
