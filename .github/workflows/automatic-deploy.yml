@@ -34,5 +34,5 @@ jobs:
         
       - name: Deploy with rsync
         run: 
-          echo "$HOME/Customer_Intervention_React_Application/build/*" >> $GITHUB_PATH
+          echo "./build/*" >> $GITHUB_PATH
           rsync -avz $GITHUB_PATH ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:/var/www/mobile.monichan.com/html
