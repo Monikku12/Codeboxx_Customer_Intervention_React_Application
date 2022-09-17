@@ -3,7 +3,6 @@
     "version": "0.1.0",
     "private": true,
     "homepage": "https://mobile.monichan.com",
-    
     "dependencies": {
         "@fvilers/disable-react-devtools": "^1.3.0",
         "@sentry/react": "^7.13.0",
@@ -22,6 +21,7 @@
     },
     "scripts": {
         "start": "react-scripts start",
+        "predeploy": "npm run-script build",
         "build": "react-scripts build",
         "test": "react-scripts test",
         "eject": "react-scripts eject"
