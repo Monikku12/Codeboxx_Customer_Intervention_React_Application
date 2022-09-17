@@ -27,7 +27,7 @@ jobs:
         
       - name: Build
         run: npm run build
-        working-directory: $HOME/Customer_Intervention_React_Application
+        working-directory: "$HOME/Customer_Intervention_React_Application"
         
       - name: Deploy          
         run: 
