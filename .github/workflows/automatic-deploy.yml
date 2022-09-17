@@ -29,7 +29,7 @@ jobs:
         run: npm run build
         working-directory: "$HOME/Customer_Intervention_React_Application"
         
-      - name: Deploy          
+      - name: Deploy with rsync
         run: 
           echo "$HOME/Customer_Intervention_React_Application/build/*" >> $GITHUB_PATH
-          scp -r $GITHUB_PATH ubuntu@138.197.140.201:/var/www/mobile.monichan.com/html
+          rsync -avz $GITHUB_PATH ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:/var/www/mobile.monichan.com/html
