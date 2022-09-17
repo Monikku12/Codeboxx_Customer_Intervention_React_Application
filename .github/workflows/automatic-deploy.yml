@@ -33,5 +33,5 @@ jobs:
         
       - name: Deploy
         run: 
-          echo "$HOME/Customer_Intervention_React_Application/build/*" >> $GITHUB_PATH
+          echo "./build/*" >> $GITHUB_PATH
           scp -r $GITHUB_PATH ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:/var/www/mobile.monichan.com/html
